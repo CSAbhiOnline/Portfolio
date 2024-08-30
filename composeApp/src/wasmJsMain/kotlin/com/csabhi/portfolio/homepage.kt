@@ -1,5 +1,6 @@
 package com.csabhi.portfolio
 
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.lightColors
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,8 +37,8 @@ import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.compose_multiplatform
 
 @Composable
-fun homepage() {
-    MaterialTheme {
+fun homsepage() {
+
         /*var showContent by remember { mutableStateOf(false) }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(onClick = { showContent = !showContent }) {
@@ -50,34 +52,17 @@ fun homepage() {
                 }
             }
         }*/
+
+
         var isvisible by remember {
             mutableStateOf(false)
         }
-        val imageoffset by animateFloatAsState(targetValue = if (isvisible) -50f else 0f, animationSpec = tween(500))
-
-        Box(Modifier.fillMaxSize().background(themebrush)){
-            Column(Modifier.fillMaxWidth().padding(0.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Box(Modifier.fillMaxWidth().background(Color.Transparent).padding(0.dp).shadow(elevation = 5.dp, spotColor = othercolor, ambientColor = othercolor)){
-                    Text("Welcome", style = TextStyle(
-                        fontSize = TextUnit.Unspecified,
-                        color = black,
-                        fontFamily = FontFamily.Serif
-                    ))
-                }
-                Row (Modifier.fillMaxWidth().weight(1f).background(Color.Transparent), horizontalArrangement = Arrangement.Center){
-                    Image(painterResource(Res.drawable.compose_multiplatform), null,Modifier.clickable { isvisible=!isvisible }.offset(x=imageoffset.dp))
-                    AnimatedVisibility(
-                        visible = isvisible,
-                        enter = fadeIn(animationSpec = tween(500)),
-                        exit = fadeOut(animationSpec = tween(500)),modifier=Modifier.weight(1f)
-                    ){
-                        Text("This Website is totaly made using Kotlin", color = Color.White,modifier=Modifier.fillMaxWidth())
-                    }
-
-                }
-
-            }
-
+    var isdarkmode by remember {
+            mutableStateOf(true)
         }
-    }
+        val imageoffset by animateFloatAsState(targetValue = if (isvisible) -50f else 0f, animationSpec = tween(500))
+PortfolioTheme (){
+
 }
+
+    }
