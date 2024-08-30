@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 
 val LightPrimaryColor = Color(0xFFFFFFFF)
 val LightOnPrimaryColor = othercolorlightmode
-val LightBackgroundColor = Color(0xfff3f3f3)
+val LightBackgroundColor = Color(0xfffcfcfc)
 val LightOnBackgroundColor = Color(0xFF000000)
 
 // Define dark theme colors
