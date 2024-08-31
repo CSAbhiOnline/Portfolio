@@ -11,17 +11,24 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-
+// light theme colors
 val LightPrimaryColor = Color(0xFFFFFFFF)
 val LightOnPrimaryColor = othercolorlightmode
 val LightBackgroundColor = Color(0xfffcfcfc)
 val LightOnBackgroundColor = Color(0xFF000000)
+val LightTextColor= othercolorlightmode
+val LightHeaderColor= LightOnPrimaryColor.copy(alpha = 0.3f)
 
-// Define dark theme colors
+// dark theme colors
 val DarkPrimaryColor = Color(0xFF000000)
 val DarkOnPrimaryColor = othercolor
 val DarkBackgroundColor = Color(0xFF121212)
 val DarkOnBackgroundColor = Color(0xFFFFFFFF)
+val DarkTextColor= othercolor
+val DarkHeaderColor=Color(0xff000000)
+
+
+
 
  val LightColorPalette = lightColors(
     primary = LightPrimaryColor,
