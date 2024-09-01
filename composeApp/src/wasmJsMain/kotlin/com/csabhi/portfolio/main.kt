@@ -13,6 +13,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.gestures.draggable
@@ -51,6 +52,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.darkColors
 import androidx.compose.material.icons.Icons
@@ -78,6 +80,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalViewConfiguration
@@ -213,7 +216,7 @@ val themedTextcolor by animateColorAsState(
                         )
                     }
                 ){
-                    Row(Modifier.fillMaxWidth().wrapContentHeight(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically){
+                    Row(Modifier.fillMaxWidth().wrapContentHeight().background(Color.Transparent), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically){
                         Text("Welcome", style = TextStyle(
                             fontSize = (widthofscreen*0.04f).sp,
                             color = themedTextcolor,
@@ -238,17 +241,31 @@ val themedTextcolor by animateColorAsState(
                         )
                         val iconresource =if(isdarkmode) Res.drawable.light_mode_svgrepo_com else Res.drawable.dark_mode_night_moon_svgrepo_com
 
-                        Button(onClick = {
-                            isdarkmode=!isdarkmode
-                        },
-
-                            colors = ButtonDefaults.buttonColors(HeaderColor),
-                            modifier = Modifier.size((widthofscreen*0.05f).dp).padding((widthofscreen*0.01f).dp), contentPadding = PaddingValues(0.dp)
-                        ){
-                            Crossfade(targetState = iconresource, animationSpec = tween(500)){
-                                Icon(painter = painterResource(it) , contentDescription = "", tint = onPrimaryColor, modifier = Modifier.size((widthofscreen*0.02f).dp))
-                            }
+                        Crossfade(targetState = iconresource, animationSpec = tween(1000), modifier = Modifier.background(
+                            Color.Transparent).padding((widthofscreen*0.01f).dp)){
+                            Icon(painter = painterResource(it) , contentDescription = "", tint = onPrimaryColor, modifier = Modifier.size((widthofscreen*0.02f).dp).background(
+                                Color.Transparent).clickable {
+                                    isdarkmode=!isdarkmode
+                            })
                         }
+
+                        /*Button(onClick = {
+                            isdarkmode=!isdarkmode
+                        },*//*colors = ButtonDefaults.buttonColors(Color.Transparent),
+                            modifier = Modifier.size((widthofscreen*0.05f).dp).padding((widthofscreen*0.01f).dp), contentPadding = PaddingValues(0.dp), border = BorderStroke(1.dp,onPrimaryColor), shape = RoundedCornerShape(8.dp)*//*
+
+                            colors = ButtonDefaults.buttonColors(Color.Transparent), border = BorderStroke(1.dp,onPrimaryColor), shape = RoundedCornerShape(12.dp), modifier = Modifier.size((widthofscreen*0.05f).dp).padding((widthofscreen*0.01f).dp), contentPadding = PaddingValues(0.dp)
+                        ){
+                            Box(Modifier.fillMaxSize().background(onPrimaryColor).background(
+                                HeaderColor), contentAlignment = Alignment.Center){
+                                Crossfade(targetState = iconresource, animationSpec = tween(1000), modifier = Modifier.background(
+                                    Color.Transparent)){
+                                    Icon(painter = painterResource(it) , contentDescription = "", tint = onPrimaryColor, modifier = Modifier.size((widthofscreen*0.02f).dp).background(
+                                        Color.Transparent))
+                                }
+                            }
+
+                        }*/
 
 
 
@@ -259,9 +276,10 @@ val themedTextcolor by animateColorAsState(
                 LazyColumn(Modifier.fillMaxWidth().wrapContentHeight().background(Color.Transparent), horizontalAlignment = Alignment.Start, contentPadding = PaddingValues(bottom=(widthofscreen*0.5f).dp), state = scrollstatelazycolumn){
                     item {
                         FadeInItem {
-                            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround, verticalAlignment = Alignment.CenterVertically){
+                            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically)
+                            {
 
-                                Column (Modifier.weight(1f).padding(start = (widthofscreen*0.1f).dp, end = (widthofscreen*0.03f).dp), horizontalAlignment = Alignment.Start){
+                                Column (Modifier.fillMaxWidth().weight(1f).padding(start=(widthofscreen*0.1f).dp), horizontalAlignment = Alignment.Start){
                                     Spacer(modifier = Modifier.height((heightofscreen*0.2f).dp))
                                     Text("Hi, my name is", style = TextStyle(
                                         color = themedTextcolor,
@@ -276,7 +294,7 @@ val themedTextcolor by animateColorAsState(
                                     ), modifier = Modifier.padding(vertical = (heightofscreen*0.02f).dp).wrapContentSize()
                                     )
 
-                                    Row(modifier = Modifier.fillMaxWidth().wrapContentHeight(), horizontalArrangement = Arrangement.Start){
+                                    Row(modifier = Modifier.wrapContentHeight(), horizontalArrangement = Arrangement.Start){
                                         Text("I build apps for Android",style = TextStyle(
                                             color = onBackgroundColor,
                                             fontFamily = FontFamily(Font(Res.font.GothamBold)),
@@ -302,9 +320,42 @@ val themedTextcolor by animateColorAsState(
                                         fontFamily = FontFamily(Font(Res.font.GothamMedium)),
                                         fontSize = (widthofscreen*0.01f).sp), modifier = Modifier.padding(vertical = (heightofscreen*0.02f).dp).wrapContentSize()
                                     )
+
+                                    Row(Modifier.fillMaxWidth().background(Color.Transparent), horizontalArrangement = Arrangement.spacedBy((widthofscreen*0.03f).dp))
+                                    {
+                                        Button(onClick = {
+
+                                        }, colors = ButtonDefaults.buttonColors(Color.Transparent), border = BorderStroke(1.dp,onPrimaryColor), shape = RoundedCornerShape(12.dp), modifier = Modifier.width((widthofscreen*0.1f).dp).height((widthofscreen*0.023f).dp), contentPadding = PaddingValues(0.dp))
+                                        {Box(Modifier.background(backgroundColor).fillMaxSize(), contentAlignment = Alignment.Center)
+                                        {
+                                            Text("Download CV",style=TextStyle(
+                                                color = themedTextcolor,
+                                                fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                                fontSize = (widthofscreen*0.01f).sp))
+                                        }
+
+                                        }
+                                        Button(onClick = {
+
+                                        }, colors = ButtonDefaults.buttonColors(Color.Transparent), border = BorderStroke(1.dp,onPrimaryColor), shape = RoundedCornerShape(12.dp), modifier = Modifier.width((widthofscreen*0.1f).dp).height((widthofscreen*0.023f).dp), contentPadding = PaddingValues(0.dp))
+                                        {Box(Modifier.background(backgroundColor).fillMaxSize(), contentAlignment = Alignment.Center)
+                                        {
+                                            Text("Hire Me!",style=TextStyle(
+                                                color = themedTextcolor,
+                                                fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                                fontSize = (widthofscreen*0.01f).sp))
+                                        }
+
+                                        }
+                                        
+
+                                    }
                                 }
-                              Image(painter = painterResource(Res.drawable.my_photo),"", modifier = Modifier.size((widthofscreen*0.21f).dp).clip(
-                                  CircleShape).weight(1f))
+Box(contentAlignment = Alignment.Center, modifier = Modifier.weight(1f)){
+    Image(painter = painterResource(Res.drawable.my_photo),"", modifier = Modifier.size((widthofscreen*0.27f).dp).clip(
+        CircleShape), contentScale = ContentScale.FillWidth)
+}
+
 
 
 

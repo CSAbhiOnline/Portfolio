@@ -17,7 +17,7 @@ val LightOnPrimaryColor = othercolorlightmode
 val LightBackgroundColor = Color(0xfffcfcfc)
 val LightOnBackgroundColor = Color(0xFF000000)
 val LightTextColor= othercolorlightmode
-val LightHeaderColor= LightOnPrimaryColor.copy(alpha = 0.3f)
+val LightHeaderColor= othercolorlightmode.copy(alpha = 0.3f)
 
 // dark theme colors
 val DarkPrimaryColor = Color(0xFF000000)
