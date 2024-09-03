@@ -104,6 +104,8 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
+import org.w3c.dom.Element
+import org.w3c.dom.HTMLElement
 import portfolio.composeapp.generated.resources.GothamBold
 import portfolio.composeapp.generated.resources.GothamLight
 import portfolio.composeapp.generated.resources.GothamMedium
@@ -146,6 +148,7 @@ fun homepage(){
     var isdarkmode by remember{
         mutableStateOf(true)
     }
+    val coroutineScope= rememberCoroutineScope()
 
     val darkColors = darkColors(
     primary = DarkPrimaryColor,
@@ -249,24 +252,6 @@ val themedTextcolor by animateColorAsState(
                             })
                         }
 
-                        /*Button(onClick = {
-                            isdarkmode=!isdarkmode
-                        },*//*colors = ButtonDefaults.buttonColors(Color.Transparent),
-                            modifier = Modifier.size((widthofscreen*0.05f).dp).padding((widthofscreen*0.01f).dp), contentPadding = PaddingValues(0.dp), border = BorderStroke(1.dp,onPrimaryColor), shape = RoundedCornerShape(8.dp)*//*
-
-                            colors = ButtonDefaults.buttonColors(Color.Transparent), border = BorderStroke(1.dp,onPrimaryColor), shape = RoundedCornerShape(12.dp), modifier = Modifier.size((widthofscreen*0.05f).dp).padding((widthofscreen*0.01f).dp), contentPadding = PaddingValues(0.dp)
-                        ){
-                            Box(Modifier.fillMaxSize().background(onPrimaryColor).background(
-                                HeaderColor), contentAlignment = Alignment.Center){
-                                Crossfade(targetState = iconresource, animationSpec = tween(1000), modifier = Modifier.background(
-                                    Color.Transparent)){
-                                    Icon(painter = painterResource(it) , contentDescription = "", tint = onPrimaryColor, modifier = Modifier.size((widthofscreen*0.02f).dp).background(
-                                        Color.Transparent))
-                                }
-                            }
-
-                        }*/
-
 
 
                     }
@@ -324,7 +309,7 @@ val themedTextcolor by animateColorAsState(
                                     Row(Modifier.fillMaxWidth().background(Color.Transparent), horizontalArrangement = Arrangement.spacedBy((widthofscreen*0.03f).dp))
                                     {
                                         Button(onClick = {
-
+                                            window.open("https://docs.google.com/uc?export=download&id=1LAsxzm87i1oFER9h3VqvCi7M4iG7PXOa","_top")
                                         }, colors = ButtonDefaults.buttonColors(Color.Transparent), border = BorderStroke(1.dp,onPrimaryColor), shape = RoundedCornerShape(12.dp), modifier = Modifier.width((widthofscreen*0.1f).dp).height((widthofscreen*0.023f).dp), contentPadding = PaddingValues(0.dp))
                                         {Box(Modifier.background(backgroundColor).fillMaxSize(), contentAlignment = Alignment.Center)
                                         {
@@ -336,6 +321,9 @@ val themedTextcolor by animateColorAsState(
 
                                         }
                                         Button(onClick = {
+                                            coroutineScope.launch {
+                                                scrollstatelazycolumn.animateScrollToItem(2)
+                                            }
 
                                         }, colors = ButtonDefaults.buttonColors(Color.Transparent), border = BorderStroke(1.dp,onPrimaryColor), shape = RoundedCornerShape(12.dp), modifier = Modifier.width((widthofscreen*0.1f).dp).height((widthofscreen*0.023f).dp), contentPadding = PaddingValues(0.dp))
                                         {Box(Modifier.background(backgroundColor).fillMaxSize(), contentAlignment = Alignment.Center)
@@ -372,6 +360,7 @@ Box(contentAlignment = Alignment.Center, modifier = Modifier.weight(1f)){
                              modifier = Modifier.fillMaxWidth(),
                              horizontalAlignment = Alignment.CenterHorizontally
                          ) {
+
                              Column(modifier = Modifier.fillParentMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                                  Text("Tech Skills",style = TextStyle(
                                      color = onBackgroundColor,
@@ -430,36 +419,12 @@ var scrollStatelazyrow= rememberLazyListState()
 
             }
 
-           /* Box(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(4.dp)
-                    .align(Alignment.CenterEnd)
-                    .background(Color.Gray)
-            ) {
-                // Calculate the scroll progress based on the current visible items and total items count
-                val firstVisibleItemIndex = scrollstatelazycolumn.firstVisibleItemIndex
-                val firstVisibleItemScrollOffset = scrollstatelazycolumn.firstVisibleItemScrollOffset
 
-                // Calculate the scroll progress and normalize it to the range [0, 1]
-                val scrollProgress = (firstVisibleItemIndex + firstVisibleItemScrollOffset / scrollstatelazycolumn.layoutInfo.visibleItemsInfo.firstOrNull()?.size?.toFloat()!!) / scrollstatelazycolumn.layoutInfo.totalItemsCount.toFloat()
-
-                // Calculate the height of the indicator based on the visible portion of the list
-                val indicatorHeight = 60.dp // Set a fixed height for simplicity
-                val maxScrollHeight = 300.dp - indicatorHeight // The range in which the indicator can move
-
-                // Apply the calculated scroll progress to position the indicator
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(indicatorHeight)
-                        .offset(y = (scrollProgress * maxScrollHeight)))
-
-
-            }*/
     }}
 
 }
+
+
 data class techskillsitem(val name:String,val image:DrawableResource)
 
 @Composable
