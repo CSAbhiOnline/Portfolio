@@ -1,26 +1,15 @@
 package com.csabhi.portfolio
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.animateValueAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.animateScrollBy
-import androidx.compose.foundation.gestures.draggable
-import androidx.compose.foundation.gestures.rememberDraggableState
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollBy
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,38 +20,24 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.shape.ZeroCornerSize
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.darkColors
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalContext
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -76,88 +51,90 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
-import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.times
 import androidx.compose.ui.window.ComposeViewport
-import androidx.compose.ui.window.Popup
 import kotlinx.browser.document
 import kotlinx.browser.window
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
-import org.w3c.dom.Element
-import org.w3c.dom.HTMLElement
 import portfolio.composeapp.generated.resources.GothamBold
-import portfolio.composeapp.generated.resources.GothamLight
 import portfolio.composeapp.generated.resources.GothamMedium
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.android_logo_wink
 import portfolio.composeapp.generated.resources.android_studio_logo
-import portfolio.composeapp.generated.resources.compose_multiplatform
 import portfolio.composeapp.generated.resources.compose_multiplatform_logo
 import portfolio.composeapp.generated.resources.dark_mode_night_moon_svgrepo_com
+import portfolio.composeapp.generated.resources.facebooklogo
+import portfolio.composeapp.generated.resources.firebaselogo
+import portfolio.composeapp.generated.resources.github_mark
+import portfolio.composeapp.generated.resources.instagralogo
 import portfolio.composeapp.generated.resources.javalogo
 import portfolio.composeapp.generated.resources.kotlingoodlogo
 import portfolio.composeapp.generated.resources.light_mode_svgrepo_com
 import portfolio.composeapp.generated.resources.my_photo
+import portfolio.composeapp.generated.resources.mysqllogo
+import portfolio.composeapp.generated.resources.pytho_logo
+import portfolio.composeapp.generated.resources.redditlogo2436
 import portfolio.composeapp.generated.resources.square
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     ComposeViewport(document.body!!) {
 
-            homepage()
+        homepage()
 
 
     }
 }
+
 fun getscreenheight(): Float {
     return window.innerHeight.toFloat()
 }
+
 fun getscreenwidth(): Float {
     return window.innerWidth.toFloat()
 }
-@OptIn(ExperimentalFoundationApi::class)
+
+@OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
 @Composable
-fun homepage(){
-    val heightofscreen= getscreenheight()
-    val widthofscreen= getscreenwidth()
+fun homepage() {
+    val heightofscreen = getscreenheight()
+    val widthofscreen = getscreenwidth()
+
+    val myimage = painterResource(Res.drawable.my_photo)
 
 
-
-
-    var isdarkmode by remember{
+    var isdarkmode by remember {
         mutableStateOf(true)
     }
-    val coroutineScope= rememberCoroutineScope()
+    val coroutineScope = rememberCoroutineScope()
 
     val darkColors = darkColors(
-    primary = DarkPrimaryColor,
-    onPrimary = DarkOnPrimaryColor,
-    background = DarkBackgroundColor,
-    onBackground = DarkOnBackgroundColor,
-    secondary = DarkTextColor,
-    onSecondary = DarkHeaderColor
-)
+        primary = DarkPrimaryColor,
+        onPrimary = DarkOnPrimaryColor,
+        background = DarkBackgroundColor,
+        onBackground = DarkOnBackgroundColor,
+        secondary = DarkTextColor,
+        onSecondary = DarkHeaderColor
+    )
 
     val lightColors = lightColors(
         primary = LightPrimaryColor,
@@ -172,11 +149,11 @@ fun homepage(){
         targetValue = colors.background,
         animationSpec = tween(durationMillis = 1000)
     )
-val HeaderColor by animateColorAsState(
+    val HeaderColor by animateColorAsState(
         targetValue = colors.onSecondary,
         animationSpec = tween(durationMillis = 1000)
     )
-val themedTextcolor by animateColorAsState(
+    val themedTextcolor by animateColorAsState(
         targetValue = colors.secondary,
         animationSpec = tween(durationMillis = 1000)
     )
@@ -195,21 +172,38 @@ val themedTextcolor by animateColorAsState(
         targetValue = colors.onBackground,
         animationSpec = tween(durationMillis = 1000)
     )
-    val techskillsitemlist= listOf(
+    val techskillsitemlist = listOf(
         techskillsitem("Android Studio", image = Res.drawable.android_studio_logo),
         techskillsitem("Kotlin", image = Res.drawable.kotlingoodlogo),
         techskillsitem("Compose Multiplatform", image = Res.drawable.compose_multiplatform_logo),
-        techskillsitem("Java", image = Res.drawable.javalogo)
+        techskillsitem("Firebase", image = Res.drawable.firebaselogo),
+        techskillsitem("MySQL", image = Res.drawable.mysqllogo),
+        techskillsitem("GitHub", image = Res.drawable.github_mark),
+        techskillsitem("Java", image = Res.drawable.javalogo),
+        techskillsitem("Python", image = Res.drawable.pytho_logo),
     )
 
 
     PortfolioTheme() {
-        Box(Modifier.fillMaxSize().background(backgroundColor)){
-            val scrollstatelazycolumn= rememberLazyListState()
-            Column(Modifier.fillMaxWidth().wrapContentHeight().padding(0.dp).background(Color.Transparent), horizontalAlignment = Alignment.CenterHorizontally) {
-                Box(Modifier.fillMaxWidth().background(HeaderColor,RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp)).clip(RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp))
+        Box(Modifier.fillMaxSize().background(backgroundColor)) {
+            val scrollstatelazycolumn = rememberLazyListState()
+            VerticalScrollbar(
+                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+                adapter = rememberScrollbarAdapter(scrollstatelazycolumn)
+            )
+
+
+            Column(
+                Modifier.fillMaxWidth().wrapContentHeight().padding(0.dp)
+                    .background(Color.Transparent),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(Modifier.fillMaxWidth().background(
+                    HeaderColor,
+                    RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp)
+                ).clip(RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp))
                     .drawBehind {
-                        val strokeWidth =4.dp.toPx() // Thickness of the border
+                        val strokeWidth = 4.dp.toPx() // Thickness of the border
                         val y = size.height - strokeWidth / 2
                         drawLine(
                             color = onPrimaryColor,
@@ -218,133 +212,251 @@ val themedTextcolor by animateColorAsState(
                             strokeWidth = strokeWidth
                         )
                     }
-                ){
-                    Row(Modifier.fillMaxWidth().wrapContentHeight().background(Color.Transparent), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically){
-                        Text("Welcome", style = TextStyle(
-                            fontSize = (widthofscreen*0.04f).sp,
-                            color = themedTextcolor,
-                            fontFamily = FontFamily(Font(Res.font.square))
-                        ), modifier = Modifier.padding(horizontal = (widthofscreen*0.06f).dp, vertical = (heightofscreen*0.015f).dp).wrapContentSize()
+                ) {
+                    Row(
+                        Modifier.fillMaxWidth().wrapContentHeight().background(Color.Transparent),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            "Welcome",
+                            style = TextStyle(
+                                fontSize = (widthofscreen * 0.04f).sp,
+                                color = themedTextcolor,
+                                fontFamily = FontFamily(Font(Res.font.square))
+                            ),
+                            modifier = Modifier.padding(
+                                horizontal = (widthofscreen * 0.06f).dp,
+                                vertical = (heightofscreen * 0.015f).dp
+                            ).wrapContentSize()
                         )
                         Spacer(Modifier.weight(1f))
 
 
-                        Text("Projects", style = TextStyle(
-                            fontSize = (widthofscreen*0.02f).sp,
-                            color = themedTextcolor,
-                            fontFamily = FontFamily(Font(Res.font.square))
-                        ), modifier = Modifier.wrapContentSize().padding(horizontal = (widthofscreen*0.03f).dp))
-
-
-                        Text("Contact", style = TextStyle(
-                            fontSize = (widthofscreen*0.02f).sp,
-                            color = themedTextcolor,
-                            fontFamily = FontFamily(Font(Res.font.square))
-                        ), modifier = Modifier.wrapContentSize().padding(horizontal = (widthofscreen*0.03f).dp)
+                        Text(
+                            "Projects",
+                            style = TextStyle(
+                                fontSize = (widthofscreen * 0.02f).sp,
+                                color = themedTextcolor,
+                                fontFamily = FontFamily(Font(Res.font.square))
+                            ),
+                            modifier = Modifier.wrapContentSize()
+                                .padding(horizontal = (widthofscreen * 0.03f).dp)
                         )
-                        val iconresource =if(isdarkmode) Res.drawable.light_mode_svgrepo_com else Res.drawable.dark_mode_night_moon_svgrepo_com
 
-                        Crossfade(targetState = iconresource, animationSpec = tween(1000), modifier = Modifier.background(
-                            Color.Transparent).padding((widthofscreen*0.01f).dp)){
-                            Icon(painter = painterResource(it) , contentDescription = "", tint = onPrimaryColor, modifier = Modifier.size((widthofscreen*0.02f).dp).background(
-                                Color.Transparent).clickable {
-                                    isdarkmode=!isdarkmode
-                            })
+
+                        Text(
+                            "Contact",
+                            style = TextStyle(
+                                fontSize = (widthofscreen * 0.02f).sp,
+                                color = themedTextcolor,
+                                fontFamily = FontFamily(Font(Res.font.square))
+                            ),
+                            modifier = Modifier.wrapContentSize()
+                                .padding(horizontal = (widthofscreen * 0.03f).dp)
+                        )
+                        val iconresource =
+                            if (isdarkmode) Res.drawable.light_mode_svgrepo_com else Res.drawable.dark_mode_night_moon_svgrepo_com
+
+                        Crossfade(
+                            targetState = iconresource,
+                            animationSpec = tween(1000),
+                            modifier = Modifier.background(
+                                Color.Transparent
+                            ).padding((widthofscreen * 0.01f).dp)
+                        ) {
+                            Icon(painter = painterResource(it),
+                                contentDescription = "",
+                                tint = onPrimaryColor,
+                                modifier = Modifier.size((widthofscreen * 0.02f).dp).background(
+                                    Color.Transparent
+                                ).clickable {
+                                    isdarkmode = !isdarkmode
+                                })
                         }
-
 
 
                     }
 
                 }
 
-                LazyColumn(Modifier.fillMaxWidth().wrapContentHeight().background(Color.Transparent), horizontalAlignment = Alignment.Start, contentPadding = PaddingValues(bottom=(widthofscreen*0.5f).dp), state = scrollstatelazycolumn){
+                LazyColumn(
+                    Modifier.fillMaxWidth().wrapContentHeight().background(Color.Transparent),
+                    horizontalAlignment = Alignment.Start,
+                    contentPadding = PaddingValues(bottom = (widthofscreen * 0.5f).dp),
+                    state = scrollstatelazycolumn
+                ) {
+
                     item {
                         FadeInItem {
-                            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically)
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceEvenly,
+                                verticalAlignment = Alignment.CenterVertically
+                            )
                             {
 
-                                Column (Modifier.fillMaxWidth().weight(1f).padding(start=(widthofscreen*0.1f).dp), horizontalAlignment = Alignment.Start){
-                                    Spacer(modifier = Modifier.height((heightofscreen*0.2f).dp))
-                                    Text("Hi, my name is", style = TextStyle(
-                                        color = themedTextcolor,
-                                        fontFamily = FontFamily(Font(Res.font.GothamMedium)),
-                                        fontSize = (widthofscreen*0.02f).sp
-                                    ),modifier=Modifier.padding(vertical = (heightofscreen*0.02f).dp).wrapContentSize()
-                                    )
-                                    Text("Abhinaba Kundu.",style = TextStyle(
-                                        color = onBackgroundColor,
-                                        fontFamily = FontFamily(Font(Res.font.GothamBold)),
-                                        fontSize = (widthofscreen*0.05f).sp
-                                    ), modifier = Modifier.padding(vertical = (heightofscreen*0.02f).dp).wrapContentSize()
-                                    )
-
-                                    Row(modifier = Modifier.wrapContentHeight(), horizontalArrangement = Arrangement.Start){
-                                        Text("I build apps for Android",style = TextStyle(
-                                            color = onBackgroundColor,
-                                            fontFamily = FontFamily(Font(Res.font.GothamBold)),
-                                            fontSize = (widthofscreen*0.04f).sp
-                                        ), modifier = Modifier.padding(vertical = (heightofscreen*0.02f).dp))
-
-                                        Image(painter = painterResource(Res.drawable.android_logo_wink),"", modifier = Modifier.padding(horizontal = (widthofscreen*0.01f).dp,vertical = (heightofscreen*0.01f).dp).size((widthofscreen*0.04f).dp))
-                                    }
-                                    var text= buildAnnotatedString {
-                                        append("I am results-oriented and highly motivated recent graduate with a passion for Android development. Adept at leveraging programming skills to create innovative and user-friendly mobile applications. Eager to contribute to a dynamic team and apply academic knowledge in a real-world setting, ")
-                                        withStyle(style = SpanStyle(
+                                Column(
+                                    Modifier.fillMaxWidth().weight(1f)
+                                        .padding(start = (widthofscreen * 0.1f).dp),
+                                    horizontalAlignment = Alignment.Start
+                                ) {
+                                    Spacer(modifier = Modifier.height((heightofscreen * 0.2f).dp))
+                                    Text(
+                                        "Hi, my name is",
+                                        style = TextStyle(
                                             color = themedTextcolor,
                                             fontFamily = FontFamily(Font(Res.font.GothamMedium)),
-                                            fontSize = (widthofscreen*0.01f).sp
-                                        )){
+                                            fontSize = (widthofscreen * 0.02f).sp
+                                        ),
+                                        modifier = Modifier.padding(vertical = (heightofscreen * 0.02f).dp)
+                                            .wrapContentSize()
+                                    )
+                                    Text(
+                                        "Abhinaba Kundu.",
+                                        style = TextStyle(
+                                            color = onBackgroundColor,
+                                            fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                            fontSize = (widthofscreen * 0.05f).sp
+                                        ),
+                                        modifier = Modifier.padding(vertical = (heightofscreen * 0.02f).dp)
+                                            .wrapContentSize()
+                                    )
+
+                                    Row(
+                                        modifier = Modifier.wrapContentHeight(),
+                                        horizontalArrangement = Arrangement.Start
+                                    ) {
+                                        Text(
+                                            "I build apps for Android",
+                                            style = TextStyle(
+                                                color = onBackgroundColor,
+                                                fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                                fontSize = (widthofscreen * 0.04f).sp
+                                            ),
+                                            modifier = Modifier.padding(vertical = (heightofscreen * 0.02f).dp)
+                                        )
+
+                                        Image(
+                                            painter = painterResource(Res.drawable.android_logo_wink),
+                                            "",
+                                            modifier = Modifier.padding(
+                                                horizontal = (widthofscreen * 0.01f).dp,
+                                                vertical = (heightofscreen * 0.01f).dp
+                                            ).size((widthofscreen * 0.04f).dp)
+                                        )
+                                    }
+                                    var text = buildAnnotatedString {
+                                        append("I am results-oriented and highly motivated recent graduate with a passion for Android development. Adept at leveraging programming skills to create innovative and user-friendly mobile applications. Eager to contribute to a dynamic team and apply academic knowledge in a real-world setting, ")
+                                        withStyle(
+                                            style = SpanStyle(
+                                                color = themedTextcolor,
+                                                fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                                fontSize = (widthofscreen * 0.01f).sp
+                                            )
+                                        ) {
                                             append("I am seeking for job opportunities.")
                                         }
 
                                     }
 
-                                    Text(text,style = TextStyle(
-                                        color = onBackgroundColor.copy(alpha = 0.8f),
-                                        fontFamily = FontFamily(Font(Res.font.GothamMedium)),
-                                        fontSize = (widthofscreen*0.01f).sp), modifier = Modifier.padding(vertical = (heightofscreen*0.02f).dp).wrapContentSize()
+                                    Text(
+                                        text,
+                                        style = TextStyle(
+                                            color = onBackgroundColor.copy(alpha = 0.8f),
+                                            fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                            fontSize = (widthofscreen * 0.01f).sp
+                                        ),
+                                        modifier = Modifier.padding(vertical = (heightofscreen * 0.02f).dp)
+                                            .wrapContentSize()
                                     )
 
-                                    Row(Modifier.fillMaxWidth().background(Color.Transparent), horizontalArrangement = Arrangement.spacedBy((widthofscreen*0.03f).dp))
+                                    Row(
+                                        Modifier.fillMaxWidth().background(Color.Transparent),
+                                        horizontalArrangement = Arrangement.spacedBy((widthofscreen * 0.03f).dp)
+                                    )
                                     {
-                                        Button(onClick = {
-                                            window.open("https://docs.google.com/uc?export=download&id=1LAsxzm87i1oFER9h3VqvCi7M4iG7PXOa","_top")
-                                        }, colors = ButtonDefaults.buttonColors(Color.Transparent), border = BorderStroke(1.dp,onPrimaryColor), shape = RoundedCornerShape(12.dp), modifier = Modifier.width((widthofscreen*0.1f).dp).height((widthofscreen*0.023f).dp), contentPadding = PaddingValues(0.dp))
-                                        {Box(Modifier.background(backgroundColor).fillMaxSize(), contentAlignment = Alignment.Center)
+                                        Button(
+                                            onClick = {
+                                                window.open(
+                                                    "https://docs.google.com/uc?export=download&id=1LAsxzm87i1oFER9h3VqvCi7M4iG7PXOa",
+                                                    "_top"
+                                                )
+                                            },
+                                            colors = ButtonDefaults.buttonColors(Color.Transparent),
+                                            border = BorderStroke(1.dp, onPrimaryColor),
+                                            shape = RoundedCornerShape(12.dp),
+                                            modifier = Modifier.width((widthofscreen * 0.1f).dp)
+                                                .height((widthofscreen * 0.023f).dp),
+                                            contentPadding = PaddingValues(0.dp)
+                                        )
                                         {
-                                            Text("Download CV",style=TextStyle(
-                                                color = themedTextcolor,
-                                                fontFamily = FontFamily(Font(Res.font.GothamMedium)),
-                                                fontSize = (widthofscreen*0.01f).sp))
-                                        }
-
-                                        }
-                                        Button(onClick = {
-                                            coroutineScope.launch {
-                                                scrollstatelazycolumn.animateScrollToItem(2)
+                                            Box(
+                                                Modifier.background(backgroundColor).fillMaxSize(),
+                                                contentAlignment = Alignment.Center
+                                            )
+                                            {
+                                                Text(
+                                                    "Download CV", style = TextStyle(
+                                                        color = themedTextcolor,
+                                                        fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                                        fontSize = (widthofscreen * 0.01f).sp
+                                                    )
+                                                )
                                             }
 
-                                        }, colors = ButtonDefaults.buttonColors(Color.Transparent), border = BorderStroke(1.dp,onPrimaryColor), shape = RoundedCornerShape(12.dp), modifier = Modifier.width((widthofscreen*0.1f).dp).height((widthofscreen*0.023f).dp), contentPadding = PaddingValues(0.dp))
-                                        {Box(Modifier.background(backgroundColor).fillMaxSize(), contentAlignment = Alignment.Center)
-                                        {
-                                            Text("Hire Me!",style=TextStyle(
-                                                color = themedTextcolor,
-                                                fontFamily = FontFamily(Font(Res.font.GothamMedium)),
-                                                fontSize = (widthofscreen*0.01f).sp))
                                         }
+                                        Button(
+                                            onClick = {
+                                                coroutineScope.launch {
+                                                    scrollstatelazycolumn.animateScrollToItem(2)
+                                                }
+
+                                            },
+                                            colors = ButtonDefaults.buttonColors(Color.Transparent),
+                                            border = BorderStroke(1.dp, onPrimaryColor),
+                                            shape = RoundedCornerShape(12.dp),
+                                            modifier = Modifier.width((widthofscreen * 0.1f).dp)
+                                                .height((widthofscreen * 0.023f).dp),
+                                            contentPadding = PaddingValues(0.dp)
+                                        )
+                                        {
+                                            Box(
+                                                Modifier.background(backgroundColor).fillMaxSize(),
+                                                contentAlignment = Alignment.Center
+                                            )
+                                            {
+                                                Text(
+                                                    "Hire Me!", style = TextStyle(
+                                                        color = themedTextcolor,
+                                                        fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                                        fontSize = (widthofscreen * 0.01f).sp
+                                                    )
+                                                )
+                                            }
 
                                         }
-                                        
+
 
                                     }
                                 }
-Box(contentAlignment = Alignment.Center, modifier = Modifier.weight(1f)){
-    Image(painter = painterResource(Res.drawable.my_photo),"", modifier = Modifier.size((widthofscreen*0.27f).dp).clip(
-        CircleShape), contentScale = ContentScale.FillWidth)
-}
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.weight(1f)
+                                ) {
+                                    Crossfade(targetState = myimage, animationSpec = tween(1000)) {
+                                        Image(
+                                            painter = it,
+                                            "",
+                                            modifier = Modifier.size((widthofscreen * 0.27f).dp)
+                                                .clip(
+                                                    CircleShape
+                                                ),
+                                            contentScale = ContentScale.FillWidth
+                                        )
+                                    }
 
-
+                                }
 
 
                             }
@@ -352,80 +464,165 @@ Box(contentAlignment = Alignment.Center, modifier = Modifier.weight(1f)){
                         }
                     }
                     item {
-                        Spacer(Modifier.height((widthofscreen*0.06f).dp))
+                        Spacer(Modifier.height((widthofscreen * 0.06f).dp))
                     }
                     item {
-                      FadeInItem {
-                         Column(
-                             modifier = Modifier.fillMaxWidth(),
-                             horizontalAlignment = Alignment.CenterHorizontally
-                         ) {
+                        FadeInItem {
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
 
-                             Column(modifier = Modifier.fillParentMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                                 Text("Tech Skills",style = TextStyle(
-                                     color = onBackgroundColor,
-                                     fontFamily = FontFamily(Font(Res.font.GothamBold)),
-                                     fontSize = (widthofscreen*0.05f).sp
-                                 ), modifier = Modifier.padding(vertical = (widthofscreen*0.02f).dp))
-var scrollStatelazyrow= rememberLazyListState()
-                                 val coroutineScope= rememberCoroutineScope()
+                                Column(
+                                    modifier = Modifier.fillParentMaxWidth(),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text(
+                                        "Tech Skills",
+                                        style = TextStyle(
+                                            color = onBackgroundColor,
+                                            fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                            fontSize = (widthofscreen * 0.05f).sp
+                                        ),
+                                        modifier = Modifier.padding(vertical = (widthofscreen * 0.02f).dp)
+                                    )
 
-                                 LazyRow(
-                                     state = scrollStatelazyrow,
-                                     modifier = Modifier.fillMaxWidth().wrapContentHeight().draggable(
-                                         orientation = Orientation.Horizontal,
-                                         state = rememberDraggableState { delta ->
-                                             coroutineScope.launch {
-                                                 scrollStatelazyrow.scrollBy(-delta)
-                                             }
-                                         },
-                                     ))
+                                    Column(
+                                        Modifier.fillMaxWidth()
+                                    ) {
+                                        techskillsitemlist.chunked(4).forEach { rowof4 ->
+
+                                            Row(
+                                                modifier = Modifier.fillMaxWidth()
+                                                    .wrapContentHeight(),
+                                                horizontalArrangement = Arrangement.Center
+                                            ) {
+                                                rowof4.forEach {
+                                                    var isHovered by remember {
+                                                        mutableStateOf(false)
+                                                    }
+                                                    val scale by animateFloatAsState(
+                                                        targetValue = if (isHovered) 1.15f else 1f,
+                                                        animationSpec = tween(durationMillis = 300)
+                                                    )
+                                                    val alpha by animateFloatAsState(
+                                                        targetValue = if (isHovered) 0.5f else 0f,
+                                                        animationSpec = tween(durationMillis = 300)
+                                                    )
+                                                    Box(
+                                                        modifier = Modifier
+                                                            .padding(8.dp) // To give space for the glow effect
+                                                    ) {
+                                                        // Glow effect background
+                                                        Box(
+                                                            modifier = Modifier
+                                                                .matchParentSize()
+                                                                .graphicsLayer {
+                                                                    scaleX = scale
+                                                                    scaleY = scale
+                                                                    this.alpha = alpha
+                                                                }
+                                                                .background(Brush.radialGradient(
+                                                                    listOf(themedTextcolor,backgroundColor)), shape = RoundedCornerShape(12.dp))
+                                                        )
+
+                                                        Card(modifier = Modifier.width((widthofscreen * 0.11f).dp)
+                                                            .height((widthofscreen * 0.11f).dp).padding(
+                                                                horizontal = (widthofscreen * 0.01f).dp,
+                                                                vertical = (widthofscreen * 0.01f).dp
+                                                            ).onPointerEvent(
+                                                                PointerEventType.Enter
+                                                            ) {
+                                                                isHovered = true
+                                                            }.onPointerEvent(PointerEventType.Exit) {
+                                                                isHovered = false
+                                                            },
+                                                            shape = RoundedCornerShape(12.dp),
+                                                            backgroundColor = primaryColor,
+                                                            border = BorderStroke(
+                                                                0.5.dp,
+                                                                color = onPrimaryColor
+                                                            )
+                                                        )
+                                                        {
+                                                            Column(
+                                                                Modifier.fillMaxSize(),
+                                                                horizontalAlignment = Alignment.CenterHorizontally,
+                                                                verticalArrangement = Arrangement.SpaceEvenly
+                                                            ) {
+                                                                Image(
+                                                                    painter = painterResource(it.image),
+                                                                    "kotlin",
+                                                                    contentScale = ContentScale.Inside,
+                                                                    modifier = Modifier.padding(
+                                                                        horizontal = (widthofscreen * 0.009f).dp
+                                                                    ).height((widthofscreen * 0.04f).dp)
+                                                                )
+                                                                Text(
+                                                                    it.name, style = TextStyle(
+                                                                        color = themedTextcolor,
+                                                                        fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                                                        fontWeight = FontWeight.Bold,
+                                                                        fontSize = (widthofscreen * 0.012f).sp,
+                                                                        textAlign = TextAlign.Center
+                                                                    )
+                                                                )
+                                                            }
 
 
-
-                                 {
-                                     items(techskillsitemlist){
-                                         Card(modifier = Modifier.width((widthofscreen*0.11f).dp).height((widthofscreen*0.11f).dp).padding(horizontal = (widthofscreen*0.01f).dp), shape = RoundedCornerShape(12.dp), backgroundColor = primaryColor, border = BorderStroke(0.5.dp, color = onPrimaryColor))
-                                         {
-                                             Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceEvenly) {
-                                                 Image(painter = painterResource(it.image),"kotlin", modifier = Modifier.padding(horizontal=(widthofscreen*0.02f).dp).height((widthofscreen*0.02f).dp))
-                                                 Text(it.name,style = TextStyle(
-                                                     color = themedTextcolor,
-                                                     fontFamily = FontFamily(Font(Res.font.GothamLight)),
-                                                     fontWeight = FontWeight.Bold,
-                                                     fontSize = (widthofscreen*0.013f).sp
-                                                 ))
-                                             }
+                                                        }
+                                                    }
 
 
-                                         }
-                                     }
+                                                }
+                                            }
+
+                                        }
+                                    }
 
 
+                                }
 
-                                 }
-
-
-                             }
-
-                         }
-                      }
+                            }
+                        }
                     }
 
 
                 }
 
 
+            }
 
+            Column (
+                Modifier.wrapContentSize().align(Alignment.CenterEnd)
+            ){
+                Icon(painter = painterResource(Res.drawable.facebooklogo),"", modifier = Modifier.size((widthofscreen*0.04f).dp).padding((widthofscreen*0.01f).dp).background(
+                    Color.Transparent).clickable {
+                    window.open("https://www.facebook.com/abhinaba.kundu.3/","_blank")
+                }, tint = Color.Unspecified)
+
+                Icon(painter = painterResource(Res.drawable.instagralogo),"", modifier = Modifier.size((widthofscreen*0.04f).dp).padding((widthofscreen*0.01f).dp).background(
+                    Color.Transparent).clickable {
+                    window.open("https://www.instagram.com/_csabhi_/","_blank")
+                }, tint = Color.Unspecified)
+                Icon(painter = painterResource(Res.drawable.github_mark),"", modifier = Modifier.size((widthofscreen*0.04f).dp).padding((widthofscreen*0.01f).dp).background(
+                    Color.Transparent).clickable {
+                    window.open("https://github.com/CSAbhiOnline","_blank")
+                }, tint = Color.Unspecified)
+                Icon(painter = painterResource(Res.drawable.redditlogo2436),"", modifier = Modifier.size((widthofscreen*0.04f).dp).padding((widthofscreen*0.01f).dp).background(
+                    Color.Transparent).clickable {
+                    window.open("https://www.reddit.com/user/CSAbhiOnline/","_blank")
+                }, tint = Color.Unspecified)
             }
 
 
-    }}
+        }
+    }
 
 }
 
 
-data class techskillsitem(val name:String,val image:DrawableResource)
+data class techskillsitem(val name: String, val image: DrawableResource)
 
 @Composable
 fun FadeInItem(item: @Composable () -> Unit) {
