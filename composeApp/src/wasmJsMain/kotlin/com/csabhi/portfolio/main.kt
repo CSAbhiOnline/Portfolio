@@ -2,6 +2,7 @@ package com.csabhi.portfolio
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
@@ -12,6 +13,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -26,6 +28,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.shape.CircleShape
@@ -53,6 +56,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.onPointerEvent
@@ -65,6 +69,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -93,6 +99,8 @@ import portfolio.composeapp.generated.resources.my_photo
 import portfolio.composeapp.generated.resources.mysqllogo
 import portfolio.composeapp.generated.resources.pytho_logo
 import portfolio.composeapp.generated.resources.redditlogo2436
+import portfolio.composeapp.generated.resources.scorexzlogo
+import portfolio.composeapp.generated.resources.scorezlogo
 import portfolio.composeapp.generated.resources.square
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -187,10 +195,7 @@ fun homepage() {
     PortfolioTheme() {
         Box(Modifier.fillMaxSize().background(backgroundColor)) {
             val scrollstatelazycolumn = rememberLazyListState()
-            VerticalScrollbar(
-                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
-                adapter = rememberScrollbarAdapter(scrollstatelazycolumn)
-            )
+
 
 
             Column(
@@ -286,7 +291,7 @@ fun homepage() {
                     contentPadding = PaddingValues(bottom = (widthofscreen * 0.5f).dp),
                     state = scrollstatelazycolumn
                 ) {
-
+                    //profile image and names part
                     item {
                         FadeInItem {
                             Row(
@@ -444,7 +449,7 @@ fun homepage() {
                                     contentAlignment = Alignment.Center,
                                     modifier = Modifier.weight(1f)
                                 ) {
-                                    Crossfade(targetState = myimage, animationSpec = tween(1000)) {
+                                    Crossfade(targetState = myimage, animationSpec = tween(1500)) {
                                         Image(
                                             painter = it,
                                             "",
@@ -466,6 +471,7 @@ fun homepage() {
                     item {
                         Spacer(Modifier.height((widthofscreen * 0.06f).dp))
                     }
+                    //Tech skills part
                     item {
                         FadeInItem {
                             Column(
@@ -586,12 +592,85 @@ fun homepage() {
                             }
                         }
                     }
+                    item{
+                        Spacer(modifier =  Modifier.height((widthofscreen*0.1f).dp).fillMaxWidth().background(Color.Transparent))
+                    }
+                    item{
+                        Spacer(modifier =  Modifier.height(1.dp).fillMaxWidth().background(onPrimaryColor))
+                    }
+
+                    //projects part
+                    item{
+                        FadeInItem {
+                            Box(Modifier.fillMaxWidth().wrapContentHeight().background(primaryColor)){
+                                Column(Modifier.fillMaxWidth().wrapContentHeight().padding(vertical = (widthofscreen*0.05f).dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center){
+                                    Text(
+                                        "Projects",
+                                        style = TextStyle(
+                                            color = onBackgroundColor,
+                                            fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                            fontSize = (widthofscreen * 0.05f).sp
+                                        ),
+                                        modifier = Modifier.padding(vertical = (widthofscreen * 0.02f).dp)
+                                    )
+
+                                    LazyRow(Modifier.fillMaxWidth().wrapContentHeight().padding(top=(widthofscreen*0.05f).dp), horizontalArrangement = Arrangement.SpaceEvenly)
+                                    {
+
+                                        item{
+                                            var expand by remember {
+                                                mutableStateOf(false)
+                                            }
+                                            val size by animateDpAsState(targetValue = if(expand) (widthofscreen*0.4f).dp else (widthofscreen*0.18f).dp)
+                                            Card(Modifier.width(size).height(size*1.2f).clickable {
+                                                expand=!expand
+                                            }, border = BorderStroke(width = 2.dp, color = onPrimaryColor), backgroundColor = primaryColor, shape = RoundedCornerShape(16.dp)) {
+                                                Column(modifier = Modifier.fillMaxSize().padding((widthofscreen*0.008f).dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                                                    Image(painter = painterResource(Res.drawable.scorexzlogo),"", modifier =  Modifier.size(size/2).padding((widthofscreen*0.009f).dp))
+                                                    Text(
+                                                        "Scorez", style = TextStyle(
+                                                            color = themedTextcolor,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                                            fontWeight = FontWeight.Bold,
+                                                            fontSize = (widthofscreen * 0.012f).sp,
+                                                            textAlign = TextAlign.Center
+                                                        )
+                                                    )
+
+                                                    Text(text = buildAnnotatedString {
+                                                        append("A cricket runs scoring app with rich,responsive,modern UI/UX designed to be lightweight and useful companion to gully cricket matches.")
+                                                        if(!expand){
+                                                            withStyle(style =  SpanStyle(
+                                                                fontSize = (widthofscreen*0.01f).sp,
+                                                                color = onPrimaryColor)){
+                                                                append("Read more")
+                                                            }
+                                                        }
+
+                                                    }, style =  TextStyle(
+                                                        fontSize = (widthofscreen*0.01f).sp,
+                                                        color = onBackgroundColor
+                                                    ), modifier = Modifier.padding(top=(widthofscreen*0.017f).dp))
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    item{
+                        Spacer(modifier =  Modifier.height(1.dp).fillMaxWidth().background(onPrimaryColor))
+                    }
 
 
                 }
 
 
             }
+
 
             Column (
                 Modifier.wrapContentSize().align(Alignment.CenterEnd)
@@ -614,6 +693,13 @@ fun homepage() {
                     window.open("https://www.reddit.com/user/CSAbhiOnline/","_blank")
                 }, tint = Color.Unspecified)
             }
+            VerticalScrollbar(
+                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+                adapter = rememberScrollbarAdapter(scrollstatelazycolumn)
+            )
+
+
+
 
 
         }
@@ -625,7 +711,7 @@ fun homepage() {
 data class techskillsitem(val name: String, val image: DrawableResource)
 
 @Composable
-fun FadeInItem(item: @Composable () -> Unit) {
+fun FadeInItem(item: @Composable BoxScope.() -> Unit) {
     var isVisible by remember { mutableStateOf(false) }
     val alpha by animateFloatAsState(
         targetValue = if (isVisible) 1f else 0f,
