@@ -52,11 +52,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.onPointerEvent
@@ -69,8 +67,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -82,6 +78,7 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import portfolio.composeapp.generated.resources.GothamBold
+import portfolio.composeapp.generated.resources.GothamLight
 import portfolio.composeapp.generated.resources.GothamMedium
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.android_logo_wink
@@ -92,6 +89,7 @@ import portfolio.composeapp.generated.resources.facebooklogo
 import portfolio.composeapp.generated.resources.firebaselogo
 import portfolio.composeapp.generated.resources.github_mark
 import portfolio.composeapp.generated.resources.instagralogo
+import portfolio.composeapp.generated.resources.iplguru_logo
 import portfolio.composeapp.generated.resources.javalogo
 import portfolio.composeapp.generated.resources.kotlingoodlogo
 import portfolio.composeapp.generated.resources.light_mode_svgrepo_com
@@ -100,8 +98,8 @@ import portfolio.composeapp.generated.resources.mysqllogo
 import portfolio.composeapp.generated.resources.pytho_logo
 import portfolio.composeapp.generated.resources.redditlogo2436
 import portfolio.composeapp.generated.resources.scorexzlogo
-import portfolio.composeapp.generated.resources.scorezlogo
 import portfolio.composeapp.generated.resources.square
+import portfolio.composeapp.generated.resources.wallpaper_arena_logo
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
@@ -528,19 +526,28 @@ fun homepage() {
                                                                     scaleY = scale
                                                                     this.alpha = alpha
                                                                 }
-                                                                .background(Brush.radialGradient(
-                                                                    listOf(themedTextcolor,backgroundColor)), shape = RoundedCornerShape(12.dp))
+                                                                .background(
+                                                                    Brush.radialGradient(
+                                                                        listOf(
+                                                                            themedTextcolor,
+                                                                            backgroundColor
+                                                                        )
+                                                                    ),
+                                                                    shape = RoundedCornerShape(12.dp)
+                                                                )
                                                         )
 
                                                         Card(modifier = Modifier.width((widthofscreen * 0.11f).dp)
-                                                            .height((widthofscreen * 0.11f).dp).padding(
+                                                            .height((widthofscreen * 0.11f).dp)
+                                                            .padding(
                                                                 horizontal = (widthofscreen * 0.01f).dp,
                                                                 vertical = (widthofscreen * 0.01f).dp
                                                             ).onPointerEvent(
                                                                 PointerEventType.Enter
                                                             ) {
                                                                 isHovered = true
-                                                            }.onPointerEvent(PointerEventType.Exit) {
+                                                            }
+                                                            .onPointerEvent(PointerEventType.Exit) {
                                                                 isHovered = false
                                                             },
                                                             shape = RoundedCornerShape(12.dp),
@@ -562,12 +569,17 @@ fun homepage() {
                                                                     contentScale = ContentScale.Inside,
                                                                     modifier = Modifier.padding(
                                                                         horizontal = (widthofscreen * 0.009f).dp
-                                                                    ).height((widthofscreen * 0.04f).dp)
+                                                                    )
+                                                                        .height((widthofscreen * 0.04f).dp)
                                                                 )
                                                                 Text(
                                                                     it.name, style = TextStyle(
                                                                         color = themedTextcolor,
-                                                                        fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                                                        fontFamily = FontFamily(
+                                                                            Font(
+                                                                                Res.font.GothamBold
+                                                                            )
+                                                                        ),
                                                                         fontWeight = FontWeight.Bold,
                                                                         fontSize = (widthofscreen * 0.012f).sp,
                                                                         textAlign = TextAlign.Center
@@ -592,18 +604,31 @@ fun homepage() {
                             }
                         }
                     }
-                    item{
-                        Spacer(modifier =  Modifier.height((widthofscreen*0.1f).dp).fillMaxWidth().background(Color.Transparent))
+                    item {
+                        Spacer(
+                            modifier = Modifier.height((widthofscreen * 0.1f).dp).fillMaxWidth()
+                                .background(Color.Transparent)
+                        )
                     }
-                    item{
-                        Spacer(modifier =  Modifier.height(1.dp).fillMaxWidth().background(onPrimaryColor))
+                    item {
+                        Spacer(
+                            modifier = Modifier.height(1.dp).fillMaxWidth()
+                                .background(onPrimaryColor)
+                        )
                     }
 
                     //projects part
-                    item{
+                    item {
                         FadeInItem {
-                            Box(Modifier.fillMaxWidth().wrapContentHeight().background(primaryColor)){
-                                Column(Modifier.fillMaxWidth().wrapContentHeight().padding(vertical = (widthofscreen*0.05f).dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center){
+                            Box(
+                                Modifier.fillMaxWidth().wrapContentHeight().background(primaryColor)
+                            ) {
+                                Column(
+                                    Modifier.fillMaxWidth().wrapContentHeight()
+                                        .padding(vertical = (widthofscreen * 0.05f).dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center
+                                ) {
                                     Text(
                                         "Projects",
                                         style = TextStyle(
@@ -614,19 +639,42 @@ fun homepage() {
                                         modifier = Modifier.padding(vertical = (widthofscreen * 0.02f).dp)
                                     )
 
-                                    LazyRow(Modifier.fillMaxWidth().wrapContentHeight().padding(top=(widthofscreen*0.05f).dp), horizontalArrangement = Arrangement.SpaceEvenly)
+                                    LazyRow(
+                                        Modifier.fillMaxWidth().wrapContentHeight()
+                                            .padding(top = (widthofscreen * 0.05f).dp),
+                                        horizontalArrangement = Arrangement.spacedBy((widthofscreen * 0.01f).dp)
+                                    )
                                     {
-
-                                        item{
+//scorez
+                                        item {
                                             var expand by remember {
                                                 mutableStateOf(false)
                                             }
-                                            val size by animateDpAsState(targetValue = if(expand) (widthofscreen*0.4f).dp else (widthofscreen*0.18f).dp)
-                                            Card(Modifier.width(size).height(size*1.2f).clickable {
-                                                expand=!expand
-                                            }, border = BorderStroke(width = 2.dp, color = onPrimaryColor), backgroundColor = primaryColor, shape = RoundedCornerShape(16.dp)) {
-                                                Column(modifier = Modifier.fillMaxSize().padding((widthofscreen*0.008f).dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                                                    Image(painter = painterResource(Res.drawable.scorexzlogo),"", modifier =  Modifier.size(size/2).padding((widthofscreen*0.009f).dp))
+                                            val bullet="\u2022"
+                                            val newline="\n"
+                                            val size by animateDpAsState(targetValue = if (expand) (widthofscreen * 0.4f).dp else (widthofscreen * 0.18f).dp)
+                                            Card(
+                                                Modifier.width(size).height(size * 1.2f).clickable {
+                                                    expand = !expand
+                                                },
+                                                border = BorderStroke(
+                                                    width = 2.dp,
+                                                    color = onPrimaryColor
+                                                ),
+                                                backgroundColor = primaryColor,
+                                                shape = RoundedCornerShape(16.dp)
+                                            ) {
+                                                Column(
+                                                    modifier = Modifier.fillMaxSize()
+                                                        .padding((widthofscreen * 0.008f).dp),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Image(
+                                                        painter = painterResource(Res.drawable.scorexzlogo),
+                                                        "",
+                                                        modifier = Modifier.size(size / 2)
+                                                            .padding((widthofscreen * 0.009f).dp)
+                                                    )
                                                     Text(
                                                         "Scorez", style = TextStyle(
                                                             color = themedTextcolor,
@@ -637,32 +685,522 @@ fun homepage() {
                                                         )
                                                     )
 
-                                                    Text(text = buildAnnotatedString {
-                                                        append("A cricket runs scoring app with rich,responsive,modern UI/UX designed to be lightweight and useful companion to gully cricket matches.")
-                                                        if(!expand){
-                                                            withStyle(style =  SpanStyle(
-                                                                fontSize = (widthofscreen*0.01f).sp,
-                                                                color = onPrimaryColor)){
-                                                                append("Read more")
+                                                    Text(
+                                                        text = buildAnnotatedString {
+                                                            append("A cricket runs scoring app with rich,responsive,modern UI/UX designed to be lightweight and useful companion to gully cricket matches.")
+                                                            if (!expand) {
+                                                                withStyle(
+                                                                    style = SpanStyle(
+                                                                        fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                                        color = onPrimaryColor
+                                                                    )
+                                                                ) {
+                                                                    append("Read more")
+                                                                }
                                                             }
-                                                        }
 
-                                                    }, style =  TextStyle(
-                                                        fontSize = (widthofscreen*0.01f).sp,
-                                                        color = onBackgroundColor
-                                                    ), modifier = Modifier.padding(top=(widthofscreen*0.017f).dp))
+                                                        },
+                                                        style = TextStyle(
+                                                            fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                                            color = onBackgroundColor
+                                                        ),
+                                                        modifier = Modifier.padding(top = (widthofscreen * 0.017f).dp)
+                                                    )
+
+                                                    if (expand) {
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                withStyle(
+                                                                    SpanStyle(
+                                                                        fontSize = (widthofscreen * 0.015f).sp,
+                                                                        fontFamily = FontFamily(
+                                                                            Font(
+                                                                                Res.font.GothamMedium
+                                                                            )
+                                                                        ),
+                                                                        color = onBackgroundColor,
+                                                                        fontWeight = FontWeight.Bold
+
+                                                                    )
+                                                                ) {
+                                                                    append("Used tech- ")
+                                                                }
+                                                                append("Kotlin, Jetpack Compose, Android studio")
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier.padding(top = (widthofscreen * 0.03f).dp)
+                                                                .fillMaxWidth()
+                                                        )
+
+                                                        Text("Features", style = TextStyle(
+                                                            fontSize = (widthofscreen * 0.015f).sp,
+                                                            fontFamily = FontFamily(
+                                                                Font(
+                                                                    Res.font.GothamMedium
+                                                                )
+                                                            ),
+                                                            color = onBackgroundColor,
+                                                            fontWeight = FontWeight.Bold
+                                                        ), modifier = Modifier.padding(vertical = (widthofscreen*0.009f).dp).fillMaxWidth())
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Track runs, wickets, and overs for both teams.")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("See the current Run Rate (CRR).")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Keep it compact - the app is tiny")
+
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier
+                                                                .fillMaxWidth()
+                                                        )
+                                                    }
+
+
+
+
 
                                                 }
                                             }
                                         }
+                                        //wallpaper arena
+                                        item {
+                                            var expand by remember {
+                                                mutableStateOf(false)
+                                            }
+                                            val bullet="\u2022"
+                                            val newline="\n"
+                                            val size by animateDpAsState(targetValue = if (expand) (widthofscreen * 0.4f).dp else (widthofscreen * 0.18f).dp)
+                                            Card(
+                                                Modifier.width(size).height(size * 1.2f).clickable {
+                                                    expand = !expand
+                                                },
+                                                border = BorderStroke(
+                                                    width = 2.dp,
+                                                    color = onPrimaryColor
+                                                ),
+                                                backgroundColor = primaryColor,
+                                                shape = RoundedCornerShape(16.dp)
+                                            ) {
+                                                Column(
+                                                    modifier = Modifier.fillMaxSize()
+                                                        .padding((widthofscreen * 0.008f).dp),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Image(
+                                                        painter = painterResource(Res.drawable.wallpaper_arena_logo),
+                                                        "",
+                                                        modifier = Modifier.size(size / 2)
+                                                            .padding((widthofscreen * 0.009f).dp)
+                                                    )
+                                                    Text(
+                                                        "Wallpaper Arena", style = TextStyle(
+                                                            color = themedTextcolor,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                                            fontWeight = FontWeight.Bold,
+                                                            fontSize = (widthofscreen * 0.012f).sp,
+                                                            textAlign = TextAlign.Center
+                                                        )
+                                                    )
+
+                                                    Text(
+                                                        text = buildAnnotatedString {
+                                                            append("Free HD wallpapers and Backgrounds app with collection of over 10million+ of popular and breathtaking best wallpapers.")
+                                                            if (!expand) {
+                                                                withStyle(
+                                                                    style = SpanStyle(
+                                                                        fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                                        color = onPrimaryColor
+                                                                    )
+                                                                ) {
+                                                                    append("Read more")
+                                                                }
+                                                            }
+
+                                                        },
+                                                        style = TextStyle(
+                                                            fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                                            color = onBackgroundColor
+                                                        ),
+                                                        modifier = Modifier.padding(top = (widthofscreen * 0.017f).dp)
+                                                    )
+
+                                                    if (expand) {
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                withStyle(
+                                                                    SpanStyle(
+                                                                        fontSize = (widthofscreen * 0.015f).sp,
+                                                                        fontFamily = FontFamily(
+                                                                            Font(
+                                                                                Res.font.GothamMedium
+                                                                            )
+                                                                        ),
+                                                                        color = onBackgroundColor,
+                                                                        fontWeight = FontWeight.Bold
+
+                                                                    )
+                                                                ) {
+                                                                    append("Used tech- ")
+                                                                }
+                                                                append("Java/XML, Retrofit, JSON, Android studio")
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier.padding(top = (widthofscreen * 0.03f).dp)
+                                                                .fillMaxWidth()
+                                                        )
+
+                                                        Text("Features", style = TextStyle(
+                                                            fontSize = (widthofscreen * 0.015f).sp,
+                                                            fontFamily = FontFamily(
+                                                                Font(
+                                                                    Res.font.GothamMedium
+                                                                )
+                                                            ),
+                                                            color = onBackgroundColor,
+                                                            fontWeight = FontWeight.Bold
+                                                        ), modifier = Modifier.padding(vertical = (widthofscreen*0.009f).dp).fillMaxWidth())
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Huge collection of over 10mn+ images")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Fetching wallpapers asynchronously using Retrofit library")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Modern user interface designing")
+
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier
+                                                                .fillMaxWidth()
+                                                        )
+                                                    }
+
+
+
+
+
+                                                }
+                                            }
+                                        }
+                                        //IPLGuru
+                                        item {
+                                            var expand by remember {
+                                                mutableStateOf(false)
+                                            }
+                                            val bullet="\u2022"
+                                            val newline="\n"
+                                            val size by animateDpAsState(targetValue = if (expand) (widthofscreen * 0.4f).dp else (widthofscreen * 0.18f).dp)
+                                            Card(
+                                                Modifier.width(size).height(size * 1.2f).clickable {
+                                                    expand = !expand
+                                                },
+                                                border = BorderStroke(
+                                                    width = 2.dp,
+                                                    color = onPrimaryColor
+                                                ),
+                                                backgroundColor = primaryColor,
+                                                shape = RoundedCornerShape(16.dp)
+                                            ) {
+                                                Column(
+                                                    modifier = Modifier.fillMaxSize()
+                                                        .padding((widthofscreen * 0.008f).dp),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Image(
+                                                        painter = painterResource(Res.drawable.iplguru_logo),
+                                                        "",
+                                                        modifier = Modifier.size(size / 2)
+                                                            .padding((widthofscreen * 0.009f).dp)
+                                                    )
+                                                    Text(
+                                                        "IPLGuru", style = TextStyle(
+                                                            color = themedTextcolor,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                                            fontWeight = FontWeight.Bold,
+                                                            fontSize = (widthofscreen * 0.012f).sp,
+                                                            textAlign = TextAlign.Center
+                                                        )
+                                                    )
+
+                                                    Text(
+                                                        text = buildAnnotatedString {
+                                                            append("Match winner prediction app using machine learning algorithms trained on vast dataset from 2008")
+                                                            if (!expand) {
+                                                                withStyle(
+                                                                    style = SpanStyle(
+                                                                        fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                                        color = onPrimaryColor
+                                                                    )
+                                                                ) {
+                                                                    append("Read more")
+                                                                }
+                                                            }
+
+                                                        },
+                                                        style = TextStyle(
+                                                            fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                                            color = onBackgroundColor
+                                                        ),
+                                                        modifier = Modifier.padding(top = (widthofscreen * 0.017f).dp)
+                                                    )
+
+                                                    if (expand) {
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                withStyle(
+                                                                    SpanStyle(
+                                                                        fontSize = (widthofscreen * 0.015f).sp,
+                                                                        fontFamily = FontFamily(
+                                                                            Font(
+                                                                                Res.font.GothamMedium
+                                                                            )
+                                                                        ),
+                                                                        color = onBackgroundColor,
+                                                                        fontWeight = FontWeight.Bold
+
+                                                                    )
+                                                                ) {
+                                                                    append("Used tech- ")
+                                                                }
+                                                                append("Java/XML, Python, ML, scikit-learn, ChaquoPy, Android studio")
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier.padding(top = (widthofscreen * 0.03f).dp)
+                                                                .fillMaxWidth()
+                                                        )
+
+                                                        Text("Features", style = TextStyle(
+                                                            fontSize = (widthofscreen * 0.015f).sp,
+                                                            fontFamily = FontFamily(
+                                                                Font(
+                                                                    Res.font.GothamMedium
+                                                                )
+                                                            ),
+                                                            color = onBackgroundColor,
+                                                            fontWeight = FontWeight.Bold
+                                                        ), modifier = Modifier.padding(vertical = (widthofscreen*0.009f).dp).fillMaxWidth())
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Returned 92% accuracy of prediction in IPL 2023")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Leveraging powerful Machine Learning Algorithms")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Model trained on vast dataset from 2008 to 2022")
+
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier
+                                                                .fillMaxWidth()
+                                                        )
+                                                    }
+
+
+
+
+
+                                                }
+                                            }
+                                        }
+
+                                        item {
+                                            var expand by remember {
+                                                mutableStateOf(false)
+                                            }
+                                            val bullet="\u2022"
+                                            val newline="\n"
+                                            val size by animateDpAsState(targetValue = if (expand) (widthofscreen * 0.4f).dp else (widthofscreen * 0.18f).dp)
+                                            Card(
+                                                Modifier.width(size).height(size * 1.2f).clickable {
+                                                    expand = !expand
+                                                },
+                                                border = BorderStroke(
+                                                    width = 2.dp,
+                                                    color = onPrimaryColor
+                                                ),
+                                                backgroundColor = primaryColor,
+                                                shape = RoundedCornerShape(16.dp)
+                                            ) {
+                                                Column(
+                                                    modifier = Modifier.fillMaxSize()
+                                                        .padding((widthofscreen * 0.008f).dp),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Image(
+                                                        painter = painterResource(Res.drawable.iplguru_logo),
+                                                        "",
+                                                        modifier = Modifier.size(size / 2)
+                                                            .padding((widthofscreen * 0.009f).dp)
+                                                    )
+                                                    Text(
+                                                        "IPLGuru", style = TextStyle(
+                                                            color = themedTextcolor,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                                            fontWeight = FontWeight.Bold,
+                                                            fontSize = (widthofscreen * 0.012f).sp,
+                                                            textAlign = TextAlign.Center
+                                                        )
+                                                    )
+
+                                                    Text(
+                                                        text = buildAnnotatedString {
+                                                            append("Match winner prediction app using machine learning algorithms trained on vast dataset from 2008")
+                                                            if (!expand) {
+                                                                withStyle(
+                                                                    style = SpanStyle(
+                                                                        fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                                        color = onPrimaryColor
+                                                                    )
+                                                                ) {
+                                                                    append("Read more")
+                                                                }
+                                                            }
+
+                                                        },
+                                                        style = TextStyle(
+                                                            fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                                            color = onBackgroundColor
+                                                        ),
+                                                        modifier = Modifier.padding(top = (widthofscreen * 0.017f).dp)
+                                                    )
+
+                                                    if (expand) {
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                withStyle(
+                                                                    SpanStyle(
+                                                                        fontSize = (widthofscreen * 0.015f).sp,
+                                                                        fontFamily = FontFamily(
+                                                                            Font(
+                                                                                Res.font.GothamMedium
+                                                                            )
+                                                                        ),
+                                                                        color = onBackgroundColor,
+                                                                        fontWeight = FontWeight.Bold
+
+                                                                    )
+                                                                ) {
+                                                                    append("Used tech- ")
+                                                                }
+                                                                append("Java/XML, Python, ML, scikit-learn, ChaquoPy, Android studio")
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier.padding(top = (widthofscreen * 0.03f).dp)
+                                                                .fillMaxWidth()
+                                                        )
+
+                                                        Text("Features", style = TextStyle(
+                                                            fontSize = (widthofscreen * 0.015f).sp,
+                                                            fontFamily = FontFamily(
+                                                                Font(
+                                                                    Res.font.GothamMedium
+                                                                )
+                                                            ),
+                                                            color = onBackgroundColor,
+                                                            fontWeight = FontWeight.Bold
+                                                        ), modifier = Modifier.padding(vertical = (widthofscreen*0.009f).dp).fillMaxWidth())
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Returned 92% accuracy of prediction in IPL 2023")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Leveraging powerful Machine Learning Algorithms")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Model trained on vast dataset from 2008 to 2022")
+
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier
+                                                                .fillMaxWidth()
+                                                        )
+                                                    }
+
+
+
+
+
+                                                }
+                                            }
+                                        }
+
                                     }
                                 }
                             }
 
                         }
                     }
-                    item{
-                        Spacer(modifier =  Modifier.height(1.dp).fillMaxWidth().background(onPrimaryColor))
+                    item {
+                        Spacer(
+                            modifier = Modifier.height(1.dp).fillMaxWidth()
+                                .background(onPrimaryColor)
+                        )
                     }
 
 
@@ -672,34 +1210,55 @@ fun homepage() {
             }
 
 
-            Column (
+            Column(
                 Modifier.wrapContentSize().align(Alignment.CenterEnd)
-            ){
-                Icon(painter = painterResource(Res.drawable.facebooklogo),"", modifier = Modifier.size((widthofscreen*0.04f).dp).padding((widthofscreen*0.01f).dp).background(
-                    Color.Transparent).clickable {
-                    window.open("https://www.facebook.com/abhinaba.kundu.3/","_blank")
-                }, tint = Color.Unspecified)
+            ) {
+                Icon(painter = painterResource(Res.drawable.facebooklogo),
+                    "",
+                    modifier = Modifier.size((widthofscreen * 0.04f).dp)
+                        .padding((widthofscreen * 0.01f).dp).background(
+                        Color.Transparent
+                    ).clickable {
+                        window.open("https://www.facebook.com/abhinaba.kundu.3/", "_blank")
+                    },
+                    tint = Color.Unspecified
+                )
 
-                Icon(painter = painterResource(Res.drawable.instagralogo),"", modifier = Modifier.size((widthofscreen*0.04f).dp).padding((widthofscreen*0.01f).dp).background(
-                    Color.Transparent).clickable {
-                    window.open("https://www.instagram.com/_csabhi_/","_blank")
-                }, tint = Color.Unspecified)
-                Icon(painter = painterResource(Res.drawable.github_mark),"", modifier = Modifier.size((widthofscreen*0.04f).dp).padding((widthofscreen*0.01f).dp).background(
-                    Color.Transparent).clickable {
-                    window.open("https://github.com/CSAbhiOnline","_blank")
-                }, tint = Color.Unspecified)
-                Icon(painter = painterResource(Res.drawable.redditlogo2436),"", modifier = Modifier.size((widthofscreen*0.04f).dp).padding((widthofscreen*0.01f).dp).background(
-                    Color.Transparent).clickable {
-                    window.open("https://www.reddit.com/user/CSAbhiOnline/","_blank")
-                }, tint = Color.Unspecified)
+                Icon(painter = painterResource(Res.drawable.instagralogo),
+                    "",
+                    modifier = Modifier.size((widthofscreen * 0.04f).dp)
+                        .padding((widthofscreen * 0.01f).dp).background(
+                        Color.Transparent
+                    ).clickable {
+                        window.open("https://www.instagram.com/_csabhi_/", "_blank")
+                    },
+                    tint = Color.Unspecified
+                )
+                Icon(painter = painterResource(Res.drawable.github_mark),
+                    "",
+                    modifier = Modifier.size((widthofscreen * 0.04f).dp)
+                        .padding((widthofscreen * 0.01f).dp).background(
+                        Color.Transparent
+                    ).clickable {
+                        window.open("https://github.com/CSAbhiOnline", "_blank")
+                    },
+                    tint = Color.Unspecified
+                )
+                Icon(painter = painterResource(Res.drawable.redditlogo2436),
+                    "",
+                    modifier = Modifier.size((widthofscreen * 0.04f).dp)
+                        .padding((widthofscreen * 0.01f).dp).background(
+                        Color.Transparent
+                    ).clickable {
+                        window.open("https://www.reddit.com/user/CSAbhiOnline/", "_blank")
+                    },
+                    tint = Color.Unspecified
+                )
             }
             VerticalScrollbar(
                 modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
                 adapter = rememberScrollbarAdapter(scrollstatelazycolumn)
             )
-
-
-
 
 
         }
