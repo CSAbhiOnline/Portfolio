@@ -11,6 +11,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.gestures.scrollBy
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -27,9 +32,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,10 +44,14 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.darkColors
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -65,14 +76,18 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.ComposeViewport
 import kotlinx.browser.document
 import kotlinx.browser.window
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.Font
@@ -83,6 +98,7 @@ import portfolio.composeapp.generated.resources.GothamMedium
 import portfolio.composeapp.generated.resources.Res
 import portfolio.composeapp.generated.resources.android_logo_wink
 import portfolio.composeapp.generated.resources.android_studio_logo
+import portfolio.composeapp.generated.resources.candycrush
 import portfolio.composeapp.generated.resources.compose_multiplatform_logo
 import portfolio.composeapp.generated.resources.dark_mode_night_moon_svgrepo_com
 import portfolio.composeapp.generated.resources.facebooklogo
@@ -96,8 +112,11 @@ import portfolio.composeapp.generated.resources.light_mode_svgrepo_com
 import portfolio.composeapp.generated.resources.my_photo
 import portfolio.composeapp.generated.resources.mysqllogo
 import portfolio.composeapp.generated.resources.pytho_logo
+import portfolio.composeapp.generated.resources.python_final_logo
 import portfolio.composeapp.generated.resources.redditlogo2436
 import portfolio.composeapp.generated.resources.scorexzlogo
+import portfolio.composeapp.generated.resources.sendftp
+import portfolio.composeapp.generated.resources.spookchat
 import portfolio.composeapp.generated.resources.square
 import portfolio.composeapp.generated.resources.wallpaper_arena_logo
 
@@ -186,7 +205,7 @@ fun homepage() {
         techskillsitem("MySQL", image = Res.drawable.mysqllogo),
         techskillsitem("GitHub", image = Res.drawable.github_mark),
         techskillsitem("Java", image = Res.drawable.javalogo),
-        techskillsitem("Python", image = Res.drawable.pytho_logo),
+        techskillsitem("Python", image = Res.drawable.python_final_logo),
     )
 
 
@@ -245,6 +264,11 @@ fun homepage() {
                             ),
                             modifier = Modifier.wrapContentSize()
                                 .padding(horizontal = (widthofscreen * 0.03f).dp)
+                                .clickable {
+                                    coroutineScope.launch {
+                                        scrollstatelazycolumn.animateScrollToItem(5)
+                                    }
+                                }
                         )
 
 
@@ -638,11 +662,18 @@ fun homepage() {
                                         ),
                                         modifier = Modifier.padding(vertical = (widthofscreen * 0.02f).dp)
                                     )
+val projectsrowscrollstate= rememberLazyListState()
+                                    val coroutineScope=rememberCoroutineScope()
 
-                                    LazyRow(
+                                    LazyRow( state=projectsrowscrollstate, modifier=
                                         Modifier.fillMaxWidth().wrapContentHeight()
-                                            .padding(top = (widthofscreen * 0.05f).dp),
-                                        horizontalArrangement = Arrangement.spacedBy((widthofscreen * 0.01f).dp)
+                                            .padding(top = (widthofscreen * 0.05f).dp, start = (widthofscreen * 0.01f).dp).draggable(orientation = Orientation.Horizontal, state = rememberDraggableState {
+                                                coroutineScope.launch {
+                                                    projectsrowscrollstate.scrollBy(-it)
+                                                }
+
+                                            }),
+                                        horizontalArrangement = Arrangement.spacedBy((widthofscreen * 0.06f).dp)
                                     )
                                     {
 //scorez
@@ -1053,7 +1084,7 @@ fun homepage() {
                                                 }
                                             }
                                         }
-
+//candycrush
                                         item {
                                             var expand by remember {
                                                 mutableStateOf(false)
@@ -1078,13 +1109,13 @@ fun homepage() {
                                                     horizontalAlignment = Alignment.CenterHorizontally
                                                 ) {
                                                     Image(
-                                                        painter = painterResource(Res.drawable.iplguru_logo),
+                                                        painter = painterResource(Res.drawable.candycrush),
                                                         "",
                                                         modifier = Modifier.size(size / 2)
                                                             .padding((widthofscreen * 0.009f).dp)
                                                     )
                                                     Text(
-                                                        "IPLGuru", style = TextStyle(
+                                                        "CandyCrush", style = TextStyle(
                                                             color = themedTextcolor,
                                                             fontFamily = FontFamily(Font(Res.font.GothamBold)),
                                                             fontWeight = FontWeight.Bold,
@@ -1095,7 +1126,7 @@ fun homepage() {
 
                                                     Text(
                                                         text = buildAnnotatedString {
-                                                            append("Match winner prediction app using machine learning algorithms trained on vast dataset from 2008")
+                                                            append("A robust surveillance and data exfiltration malware designed to infiltrate and compromise unsuspecting users' systems, Disguised as a harmless game file.")
                                                             if (!expand) {
                                                                 withStyle(
                                                                     style = SpanStyle(
@@ -1134,7 +1165,7 @@ fun homepage() {
                                                                 ) {
                                                                     append("Used tech- ")
                                                                 }
-                                                                append("Java/XML, Python, ML, scikit-learn, ChaquoPy, Android studio")
+                                                                append("Python, PyInstaller")
                                                             },
                                                             style = TextStyle(
                                                                 fontSize = (widthofscreen * 0.015f).sp,
@@ -1160,15 +1191,15 @@ fun homepage() {
                                                             buildAnnotatedString {
                                                                 append(bullet)
                                                                 append(" ")
-                                                                append("Returned 92% accuracy of prediction in IPL 2023")
+                                                                append("Employs keylogging to capture all keystrokes entered by the user.")
                                                                 append(newline)
                                                                 append(bullet)
                                                                 append(" ")
-                                                                append("Leveraging powerful Machine Learning Algorithms")
+                                                                append("Through webcam hijacking, it covertly records the user's screen activity, providing visual insights into their digital interactions.")
                                                                 append(newline)
                                                                 append(bullet)
                                                                 append(" ")
-                                                                append("Model trained on vast dataset from 2008 to 2022")
+                                                                append("Auto-restarts upon system boot.")
 
                                                             },
                                                             style = TextStyle(
@@ -1188,6 +1219,305 @@ fun homepage() {
 
                                                 }
                                             }
+                                        }
+                                        //sendFTP
+                                        item {
+                                            var expand by remember {
+                                                mutableStateOf(false)
+                                            }
+                                            val bullet="\u2022"
+                                            val newline="\n"
+                                            val size by animateDpAsState(targetValue = if (expand) (widthofscreen * 0.4f).dp else (widthofscreen * 0.18f).dp)
+                                            Card(
+                                                Modifier.width(size).height(size * 1.2f).clickable {
+                                                    expand = !expand
+                                                },
+                                                border = BorderStroke(
+                                                    width = 2.dp,
+                                                    color = onPrimaryColor
+                                                ),
+                                                backgroundColor = primaryColor,
+                                                shape = RoundedCornerShape(16.dp)
+                                            ) {
+                                                Column(
+                                                    modifier = Modifier.fillMaxSize()
+                                                        .padding((widthofscreen * 0.008f).dp),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Image(
+                                                        painter = painterResource(Res.drawable.sendftp),
+                                                        "",
+                                                        modifier = Modifier.size(size / 2)
+                                                            .padding((widthofscreen * 0.009f).dp)
+                                                    )
+                                                    Text(
+                                                        "SendFTP", style = TextStyle(
+                                                            color = themedTextcolor,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                                            fontWeight = FontWeight.Bold,
+                                                            fontSize = (widthofscreen * 0.012f).sp,
+                                                            textAlign = TextAlign.Center
+                                                        )
+                                                    )
+
+                                                    Text(
+                                                        text = buildAnnotatedString {
+                                                            append("A PowerShell module designed to monitor a specified folder for new files and automatically upload them to an FTP server. This script is particularly useful for scenarios where you need to regularly share files via FTP without manual intervention.")
+                                                            if (!expand) {
+                                                                withStyle(
+                                                                    style = SpanStyle(
+                                                                        fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                                        color = onPrimaryColor
+                                                                    )
+                                                                ) {
+                                                                    append("Read more")
+                                                                }
+                                                            }
+
+                                                        },
+                                                        style = TextStyle(
+                                                            fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                                            color = onBackgroundColor
+                                                        ),
+                                                        modifier = Modifier.padding(top = (widthofscreen * 0.017f).dp)
+                                                    )
+
+                                                    if (expand) {
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                withStyle(
+                                                                    SpanStyle(
+                                                                        fontSize = (widthofscreen * 0.015f).sp,
+                                                                        fontFamily = FontFamily(
+                                                                            Font(
+                                                                                Res.font.GothamMedium
+                                                                            )
+                                                                        ),
+                                                                        color = onBackgroundColor,
+                                                                        fontWeight = FontWeight.Bold
+
+                                                                    )
+                                                                ) {
+                                                                    append("Used tech- ")
+                                                                }
+                                                                append("PowerShell script")
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier.padding(top = (widthofscreen * 0.03f).dp)
+                                                                .fillMaxWidth()
+                                                        )
+
+                                                        Text("Features", style = TextStyle(
+                                                            fontSize = (widthofscreen * 0.015f).sp,
+                                                            fontFamily = FontFamily(
+                                                                Font(
+                                                                    Res.font.GothamMedium
+                                                                )
+                                                            ),
+                                                            color = onBackgroundColor,
+                                                            fontWeight = FontWeight.Bold
+                                                        ), modifier = Modifier.padding(vertical = (widthofscreen*0.009f).dp).fillMaxWidth())
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Monitors a designated folder for new files.")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Automatically uploads new files to a specified directory on an FTP server.")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Deletes files after successful upload to prevent duplication.")
+
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier
+                                                                .fillMaxWidth()
+                                                        )
+                                                    }
+
+
+
+
+
+                                                }
+                                            }
+                                        }
+                                        //spookchat
+                                        item {
+                                            var expand by remember {
+                                                mutableStateOf(false)
+                                            }
+                                            val bullet="\u2022"
+                                            val newline="\n"
+                                            val size by animateDpAsState(targetValue = if (expand) (widthofscreen * 0.4f).dp else (widthofscreen * 0.18f).dp)
+                                            Card(
+                                                Modifier.width(size).height(size * 1.2f).clickable {
+                                                    expand = !expand
+                                                },
+                                                border = BorderStroke(
+                                                    width = 2.dp,
+                                                    color = onPrimaryColor
+                                                ),
+                                                backgroundColor = primaryColor,
+                                                shape = RoundedCornerShape(16.dp)
+                                            ) {
+                                                Column(
+                                                    modifier = Modifier.fillMaxSize()
+                                                        .padding((widthofscreen * 0.008f).dp),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Image(
+                                                        painter = painterResource(Res.drawable.spookchat),
+                                                        "",
+                                                        modifier = Modifier.size(size / 2)
+                                                            .padding((widthofscreen * 0.009f).dp)
+                                                    )
+                                                    Text(
+                                                        "Spookchat", style = TextStyle(
+                                                            color = themedTextcolor,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                                            fontWeight = FontWeight.Bold,
+                                                            fontSize = (widthofscreen * 0.012f).sp,
+                                                            textAlign = TextAlign.Center
+                                                        )
+                                                    )
+
+                                                    Text(
+                                                        text = buildAnnotatedString {
+                                                            append("A free, open source video chat app implementing user authentication and live video transfer.")
+                                                            if (!expand) {
+                                                                withStyle(
+                                                                    style = SpanStyle(
+                                                                        fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                                        color = onPrimaryColor
+                                                                    )
+                                                                ) {
+                                                                    append("Read more")
+                                                                }
+                                                            }
+
+                                                        },
+                                                        style = TextStyle(
+                                                            fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                                            color = onBackgroundColor
+                                                        ),
+                                                        modifier = Modifier.padding(top = (widthofscreen * 0.017f).dp)
+                                                    )
+
+                                                    if (expand) {
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                withStyle(
+                                                                    SpanStyle(
+                                                                        fontSize = (widthofscreen * 0.015f).sp,
+                                                                        fontFamily = FontFamily(
+                                                                            Font(
+                                                                                Res.font.GothamMedium
+                                                                            )
+                                                                        ),
+                                                                        color = onBackgroundColor,
+                                                                        fontWeight = FontWeight.Bold
+
+                                                                    )
+                                                                ) {
+                                                                    append("Used tech- ")
+                                                                }
+                                                                append("Java/XML, WebRTC, Firebase oAuth, Android studio")
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier.padding(top = (widthofscreen * 0.03f).dp)
+                                                                .fillMaxWidth()
+                                                        )
+
+                                                        Text("Features", style = TextStyle(
+                                                            fontSize = (widthofscreen * 0.015f).sp,
+                                                            fontFamily = FontFamily(
+                                                                Font(
+                                                                    Res.font.GothamMedium
+                                                                )
+                                                            ),
+                                                            color = onBackgroundColor,
+                                                            fontWeight = FontWeight.Bold
+                                                        ), modifier = Modifier.padding(vertical = (widthofscreen*0.009f).dp).fillMaxWidth())
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Lightweight, bloatware-free, open source alternative to video chat apps.")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Fast response and high quality video.")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Clean, modern user interface to provide best experiences.")
+
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier
+                                                                .fillMaxWidth()
+                                                        )
+                                                    }
+
+
+
+
+
+                                                }
+                                            }
+                                        }
+//see more
+                                        item{
+                                            Box(modifier = Modifier.wrapContentWidth().padding(top=(widthofscreen * 0.09f).dp).background(
+                                                Color.Transparent), contentAlignment = Alignment.Center){
+                                                OutlinedButton(onClick = {
+                                                    window.open("https://github.com/CSAbhiOnline","_blank")
+
+                                                }, modifier = Modifier.width((widthofscreen * 0.09f).dp) , colors = ButtonDefaults.outlinedButtonColors(backgroundColor= Color.Transparent), border = BorderStroke(1.dp,themedTextcolor), shape = RoundedCornerShape(16.dp)){
+                                                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically){
+                                                        Text("See more", style =  TextStyle(
+                                                            fontSize = (widthofscreen * 0.012f).sp,
+                                                            fontFamily = FontFamily.Serif,
+                                                            color = onBackgroundColor,
+                                                            fontWeight = FontWeight.Light,
+                                                            fontStyle = FontStyle.Italic
+                                                        ), modifier = Modifier.weight(0.7f)
+
+                                                        )
+                                                        Icon(Icons.Default.ArrowForward, tint = themedTextcolor, contentDescription = "")
+                                                    }
+
+                                            }
+                                            }
+                                        }
+                                        item{
+                                            Spacer(modifier = Modifier.width((widthofscreen * 0.06f).dp))
                                         }
 
                                     }
