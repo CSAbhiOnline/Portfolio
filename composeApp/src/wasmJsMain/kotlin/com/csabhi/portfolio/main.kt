@@ -49,6 +49,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.darkColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -119,6 +120,9 @@ import portfolio.composeapp.generated.resources.sendftp
 import portfolio.composeapp.generated.resources.spookchat
 import portfolio.composeapp.generated.resources.square
 import portfolio.composeapp.generated.resources.wallpaper_arena_logo
+import portfolio.composeapp.generated.resources.whatsappfinalqr
+import portfolio.composeapp.generated.resources.whatsappqr
+import portfolio.composeapp.generated.resources.whatsappqrs
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
@@ -281,6 +285,11 @@ fun homepage() {
                             ),
                             modifier = Modifier.wrapContentSize()
                                 .padding(horizontal = (widthofscreen * 0.03f).dp)
+                                .clickable {
+                                    coroutineScope.launch {
+                                        scrollstatelazycolumn.animateScrollToItem(7)
+                                    }
+                                }
                         )
                         val iconresource =
                             if (isdarkmode) Res.drawable.light_mode_svgrepo_com else Res.drawable.dark_mode_night_moon_svgrepo_com
@@ -1521,6 +1530,19 @@ val projectsrowscrollstate= rememberLazyListState()
                                         }
 
                                     }
+                                    Spacer(
+                                        modifier = Modifier.height((widthofscreen*0.1).dp).fillMaxWidth()
+                                            .background(Color.Transparent)
+                                    )
+                                    Text("Fun fact! This website was also created using Kotlin!", modifier =Modifier.fillMaxWidth(),style= TextStyle(
+                                        fontSize = (widthofscreen*0.02f).sp,
+                                        textAlign = TextAlign.Center,
+                                        color = onBackgroundColor,
+                                        fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                        fontWeight = FontWeight.Medium,
+                                        fontStyle = FontStyle.Italic
+                                    ),
+                                    )
                                 }
                             }
 
@@ -1532,6 +1554,115 @@ val projectsrowscrollstate= rememberLazyListState()
                                 .background(onPrimaryColor)
                         )
                     }
+//contacts part
+                    item{
+                        FadeInItem {
+                            Column(
+                                Modifier.fillMaxWidth().wrapContentHeight()
+                            ) {
+                                var height by remember{
+                                    mutableStateOf(0.dp)
+                                }
+                                Spacer(Modifier.fillMaxWidth().height((widthofscreen * 0.03f).dp))
+                                Text(
+                                    "Let's Connect!",
+                                    style = TextStyle(
+                                        color = onBackgroundColor,
+                                        fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                        fontSize = (widthofscreen * 0.03f).sp
+                                    ),
+                                    modifier = Modifier.padding(horizontal = (widthofscreen * 0.025f).dp, vertical = (widthofscreen * 0.02f).dp)
+                                )
+                                Row(
+                                    Modifier.fillMaxWidth().padding(horizontal = (widthofscreen * 0.05f).dp), verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Column(Modifier.weight(1f).onGloballyPositioned {
+                                       height= it.size.height.dp
+                                    }) {
+                                        Row(
+                                            Modifier.fillMaxWidth().padding(vertical = (widthofscreen * 0.015f).dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy((widthofscreen * 0.02f).dp)
+                                        ){
+                                            Icon(imageVector = Icons.Default.MailOutline, contentDescription = "", modifier = Modifier.size((widthofscreen * 0.037f).dp).background(
+                                                Color.Transparent), tint = onBackgroundColor)
+                                            Text("ovnaba2@gmail.com", style = TextStyle(
+                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                color = onBackgroundColor,
+                                                fontFamily = FontFamily.SansSerif,
+                                                textDecoration = TextDecoration.Underline
+                                            )
+                                            )
+                                        }
+                                        Row(
+                                            Modifier.fillMaxWidth().padding(vertical = (widthofscreen * 0.02f).dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy((widthofscreen * 0.02f).dp)
+                                        ){
+                                            Icon(painter = painterResource(Res.drawable.github_mark), contentDescription = "", modifier = Modifier.size((widthofscreen * 0.037f).dp).background(
+                                                Color.Transparent), tint = Color.Unspecified)
+                                            Text("github.com/CSAbhiOnline", style = TextStyle(
+                                                 fontSize = (widthofscreen * 0.015f).sp,
+                                                color = onBackgroundColor,
+                                                fontFamily = FontFamily.SansSerif,
+                                                textDecoration = TextDecoration.Underline
+                                            )
+                                            )
+                                        }
+                                        Row(
+                                            Modifier.fillMaxWidth().padding(vertical = (widthofscreen * 0.015f).dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy((widthofscreen * 0.02f).dp)
+                                        ){
+                                            Icon(painter = painterResource(Res.drawable.redditlogo2436), contentDescription = "", modifier = Modifier.size((widthofscreen * 0.037f).dp).background(
+                                                Color.Transparent), tint = Color.Unspecified)
+                                            Text("u/CSAbhiOnline", style = TextStyle(
+                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                color = onBackgroundColor,
+                                                fontFamily = FontFamily.SansSerif,
+                                                textDecoration = TextDecoration.Underline
+                                            )
+                                            )
+                                        }
+                                        Row(
+                                            Modifier.fillMaxWidth().padding(vertical = (widthofscreen * 0.015f).dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy((widthofscreen * 0.02f).dp)
+                                        ){
+                                            Icon(painter = painterResource(Res.drawable.instagralogo), contentDescription = "", modifier = Modifier.size((widthofscreen * 0.037f).dp).background(
+                                                Color.Transparent), tint = Color.Unspecified)
+                                            Text("instagram.com/_csabhi_", style = TextStyle(
+                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                color = onBackgroundColor,
+                                                fontFamily = FontFamily.SansSerif,
+                                                textDecoration = TextDecoration.Underline
+                                            )
+                                            )
+                                        }
+                                        Row(
+                                            Modifier.fillMaxWidth().padding(vertical = (widthofscreen * 0.015f).dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy((widthofscreen * 0.02f).dp)
+                                        ){
+                                            Icon(painter = painterResource(Res.drawable.facebooklogo), contentDescription = "", modifier = Modifier.size((widthofscreen * 0.037f).dp).background(
+                                                Color.Transparent), tint = Color.Unspecified)
+                                            Text("facebook.com/Abhinaba Kundu", style = TextStyle(
+                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                color = onBackgroundColor,
+                                                fontFamily = FontFamily.SansSerif,
+                                                textDecoration = TextDecoration.Underline
+                                            )
+                                            )
+                                        }
+
+
+                                    }
+                                    Column(
+                                        Modifier.weight(1f)
+                                    ) {Box(
+                                        modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd
+                                    ){
+                                        Icon(painter = painterResource(Res.drawable.whatsappfinalqr), contentDescription = "", tint = Color.Unspecified, modifier = Modifier.height(/*(widthofscreen * 0.2f).dp)*/height))
+                                    }
+
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+
 
 
                 }
