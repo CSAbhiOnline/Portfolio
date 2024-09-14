@@ -111,6 +111,7 @@ import portfolio.composeapp.generated.resources.javalogo
 import portfolio.composeapp.generated.resources.kotlingoodlogo
 import portfolio.composeapp.generated.resources.light_mode_svgrepo_com
 import portfolio.composeapp.generated.resources.my_photo
+import portfolio.composeapp.generated.resources.myphotowebp
 import portfolio.composeapp.generated.resources.mysqllogo
 import portfolio.composeapp.generated.resources.pytho_logo
 import portfolio.composeapp.generated.resources.python_final_logo
@@ -148,7 +149,7 @@ fun homepage() {
     val heightofscreen = getscreenheight()
     val widthofscreen = getscreenwidth()
 
-    val myimage = painterResource(Res.drawable.my_photo)
+    val myimage = painterResource(Res.drawable.myphotowebp)
 
 
     var isdarkmode by remember {
