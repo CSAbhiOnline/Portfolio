@@ -258,11 +258,25 @@ fun homepage() {
                         )
                         Spacer(Modifier.weight(1f))
 
-
+                        Text(
+                            "My Skills",
+                            style = TextStyle(
+                                fontSize = (widthofscreen * 0.01f).sp,
+                                color = themedTextcolor,
+                                fontFamily = FontFamily(Font(Res.font.square))
+                            ),
+                            modifier = Modifier.wrapContentSize()
+                                .padding(horizontal = (widthofscreen * 0.03f).dp)
+                                .clickable {
+                                    coroutineScope.launch {
+                                        scrollstatelazycolumn.animateScrollToItem(2)
+                                    }
+                                }
+                        )
                         Text(
                             "Projects",
                             style = TextStyle(
-                                fontSize = (widthofscreen * 0.02f).sp,
+                                fontSize = (widthofscreen * 0.01f).sp,
                                 color = themedTextcolor,
                                 fontFamily = FontFamily(Font(Res.font.square))
                             ),
@@ -279,7 +293,7 @@ fun homepage() {
                         Text(
                             "Contact",
                             style = TextStyle(
-                                fontSize = (widthofscreen * 0.02f).sp,
+                                fontSize = (widthofscreen * 0.01f).sp,
                                 color = themedTextcolor,
                                 fontFamily = FontFamily(Font(Res.font.square))
                             ),
@@ -319,7 +333,7 @@ fun homepage() {
                 LazyColumn(
                     Modifier.fillMaxWidth().wrapContentHeight().background(Color.Transparent),
                     horizontalAlignment = Alignment.Start,
-                    contentPadding = PaddingValues(bottom = (widthofscreen * 0.5f).dp),
+                    contentPadding = PaddingValues(bottom = (widthofscreen * 0.25f).dp),
                     state = scrollstatelazycolumn
                 ) {
                     //profile image and names part
@@ -445,7 +459,7 @@ fun homepage() {
                                         Button(
                                             onClick = {
                                                 coroutineScope.launch {
-                                                    scrollstatelazycolumn.animateScrollToItem(2)
+                                                    scrollstatelazycolumn.animateScrollToItem(7)
                                                 }
 
                                             },
@@ -1578,7 +1592,8 @@ val projectsrowscrollstate= rememberLazyListState()
                                 ) {
                                     Column(Modifier.weight(1f).onGloballyPositioned {
                                        height= it.size.height.dp
-                                    }) {
+                                    })
+                                    {
                                         Row(
                                             Modifier.fillMaxWidth().padding(vertical = (widthofscreen * 0.015f).dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy((widthofscreen * 0.02f).dp)
                                         ){
@@ -1589,7 +1604,9 @@ val projectsrowscrollstate= rememberLazyListState()
                                                 color = onBackgroundColor,
                                                 fontFamily = FontFamily.SansSerif,
                                                 textDecoration = TextDecoration.Underline
-                                            )
+                                            ), modifier = Modifier.clickable {
+                                                window.open("https://mail.google.com/mail/u/1/#inbox?compose=GTvVlcSMVxdjkMMMbtwpLMZHkCqDdxHsSbMnMnsBBKNPdkkwLXvpbbNsggqKwqzwhncPrmlPjMQjt","_blank")
+                                            }
                                             )
                                         }
                                         Row(
@@ -1602,7 +1619,9 @@ val projectsrowscrollstate= rememberLazyListState()
                                                 color = onBackgroundColor,
                                                 fontFamily = FontFamily.SansSerif,
                                                 textDecoration = TextDecoration.Underline
-                                            )
+                                            ), modifier = Modifier.clickable {
+                                                window.open("https://github.com/CSAbhiOnline", "_blank")
+                                            }
                                             )
                                         }
                                         Row(
@@ -1615,7 +1634,9 @@ val projectsrowscrollstate= rememberLazyListState()
                                                 color = onBackgroundColor,
                                                 fontFamily = FontFamily.SansSerif,
                                                 textDecoration = TextDecoration.Underline
-                                            )
+                                            ), modifier = Modifier.clickable {
+                                                window.open("https://www.reddit.com/user/CSAbhiOnline/", "_blank")
+                                            }
                                             )
                                         }
                                         Row(
@@ -1628,7 +1649,9 @@ val projectsrowscrollstate= rememberLazyListState()
                                                 color = onBackgroundColor,
                                                 fontFamily = FontFamily.SansSerif,
                                                 textDecoration = TextDecoration.Underline
-                                            )
+                                            ), modifier = Modifier.clickable {
+                                                window.open("https://www.instagram.com/_csabhi_/", "_blank")
+                                            }
                                             )
                                         }
                                         Row(
@@ -1641,7 +1664,9 @@ val projectsrowscrollstate= rememberLazyListState()
                                                 color = onBackgroundColor,
                                                 fontFamily = FontFamily.SansSerif,
                                                 textDecoration = TextDecoration.Underline
-                                            )
+                                            ), modifier = Modifier.clickable {
+                                                window.open("https://www.facebook.com/abhinaba.kundu.3/", "_blank")
+                                            }
                                             )
                                         }
 
