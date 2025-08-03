@@ -15,7 +15,6 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.gestures.scrollBy
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -36,7 +35,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -52,7 +50,6 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -87,8 +84,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.ComposeViewport
 import kotlinx.browser.document
 import kotlinx.browser.window
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.Font
@@ -102,28 +97,26 @@ import portfolio.composeapp.generated.resources.android_studio_logo
 import portfolio.composeapp.generated.resources.candycrush
 import portfolio.composeapp.generated.resources.compose_multiplatform_logo
 import portfolio.composeapp.generated.resources.dark_mode_night_moon_svgrepo_com
+import portfolio.composeapp.generated.resources.dockerlogo
 import portfolio.composeapp.generated.resources.facebooklogo
-import portfolio.composeapp.generated.resources.firebaselogo
 import portfolio.composeapp.generated.resources.github_mark
+import portfolio.composeapp.generated.resources.imagineailogo
 import portfolio.composeapp.generated.resources.instagralogo
 import portfolio.composeapp.generated.resources.iplguru_logo
 import portfolio.composeapp.generated.resources.javalogo
 import portfolio.composeapp.generated.resources.kotlingoodlogo
+import portfolio.composeapp.generated.resources.ktorserverlogo
 import portfolio.composeapp.generated.resources.light_mode_svgrepo_com
-import portfolio.composeapp.generated.resources.my_photo
 import portfolio.composeapp.generated.resources.myphotowebp
 import portfolio.composeapp.generated.resources.mysqllogo
-import portfolio.composeapp.generated.resources.pytho_logo
-import portfolio.composeapp.generated.resources.python_final_logo
 import portfolio.composeapp.generated.resources.redditlogo2436
 import portfolio.composeapp.generated.resources.scorexzlogo
 import portfolio.composeapp.generated.resources.sendftp
 import portfolio.composeapp.generated.resources.spookchat
+import portfolio.composeapp.generated.resources.springlogo
 import portfolio.composeapp.generated.resources.square
 import portfolio.composeapp.generated.resources.wallpaper_arena_logo
 import portfolio.composeapp.generated.resources.whatsappfinalqr
-import portfolio.composeapp.generated.resources.whatsappqr
-import portfolio.composeapp.generated.resources.whatsappqrs
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
@@ -206,12 +199,17 @@ fun homepage() {
         techskillsitem("Android Studio", image = Res.drawable.android_studio_logo),
         techskillsitem("Kotlin", image = Res.drawable.kotlingoodlogo),
         techskillsitem("Compose Multiplatform", image = Res.drawable.compose_multiplatform_logo),
-        techskillsitem("Firebase", image = Res.drawable.firebaselogo),
+        techskillsitem("Ktor", image = Res.drawable.ktorserverlogo),
+        techskillsitem("Spring", image = Res.drawable.springlogo),
+        //techskillsitem("Firebase", image = Res.drawable.firebaselogo),
         techskillsitem("MySQL", image = Res.drawable.mysqllogo),
-        techskillsitem("GitHub", image = Res.drawable.github_mark),
+        techskillsitem("Docker", image = Res.drawable.dockerlogo),
+        //techskillsitem("GitHub", image = Res.drawable.github_mark),
         techskillsitem("Java", image = Res.drawable.javalogo),
-        techskillsitem("Python", image = Res.drawable.python_final_logo),
-    )
+        //techskillsitem("Python", image = Res.drawable.python_final_logo),
+
+
+        )
 
 
     PortfolioTheme() {
@@ -379,7 +377,7 @@ fun homepage() {
                                         horizontalArrangement = Arrangement.Start
                                     ) {
                                         Text(
-                                            "I build apps for Android",
+                                            "I build Mobile Apps and Backend",
                                             style = TextStyle(
                                                 color = onBackgroundColor,
                                                 fontFamily = FontFamily(Font(Res.font.GothamBold)),
@@ -398,7 +396,7 @@ fun homepage() {
                                         )
                                     }
                                     var text = buildAnnotatedString {
-                                        append("I am results-oriented and highly motivated recent graduate with a passion for Android development. Adept at leveraging programming skills to create innovative and user-friendly mobile applications. Eager to contribute to a dynamic team and apply academic knowledge in a real-world setting, ")
+                                        append("I am results-oriented and highly motivated recent graduate with a passion for Android and backend development. Adept at leveraging programming skills to create innovative and user-friendly mobile applications. Eager to contribute to a dynamic team and apply academic knowledge in a real-world setting, ")
                                         withStyle(
                                             style = SpanStyle(
                                                 color = themedTextcolor,
@@ -406,7 +404,7 @@ fun homepage() {
                                                 fontSize = (widthofscreen * 0.01f).sp
                                             )
                                         ) {
-                                            append("I am seeking for job opportunities.")
+                                            append("I am seeking for full time job opportunities.")
                                         }
 
                                     }
@@ -430,8 +428,7 @@ fun homepage() {
                                         Button(
                                             onClick = {
                                                 window.open(
-                                                    "https://docs.google.com/uc?export=download&id=1LAsxzm87i1oFER9h3VqvCi7M4iG7PXOa",
-                                                    "_top"
+                                                    "https://drive.google.com/file/d/1SCs5mQ0Gk0QmqU5x7f4SMXgSpsAw-Krm/view?usp=sharing"
                                                 )
                                             },
                                             colors = ButtonDefaults.buttonColors(Color.Transparent),
@@ -700,7 +697,288 @@ val projectsrowscrollstate= rememberLazyListState()
                                         horizontalArrangement = Arrangement.spacedBy((widthofscreen * 0.06f).dp)
                                     )
                                     {
-//scorez
+                                        //Imagine ai
+                                        item {
+                                            var expand by remember {
+                                                mutableStateOf(false)
+                                            }
+                                            val bullet="\u2022"
+                                            val newline="\n"
+                                            val size by animateDpAsState(targetValue = if (expand) (widthofscreen * 0.4f).dp else (widthofscreen * 0.18f).dp)
+                                            Card(
+                                                Modifier.width(size).height(size * 1.2f).clickable {
+                                                    expand = !expand
+                                                },
+                                                border = BorderStroke(
+                                                    width = 2.dp,
+                                                    color = onPrimaryColor
+                                                ),
+                                                backgroundColor = primaryColor,
+                                                shape = RoundedCornerShape(16.dp)
+                                            ) {
+                                                Column(
+                                                    modifier = Modifier.fillMaxSize()
+                                                        .padding((widthofscreen * 0.008f).dp),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Image(
+                                                        painter = painterResource(Res.drawable.imagineailogo),
+                                                        "",
+                                                        modifier = Modifier.size(size / 2)
+                                                            .padding((widthofscreen * 0.009f).dp)
+                                                    )
+                                                    Text(
+                                                        "Imagine AI", style = TextStyle(
+                                                            color = themedTextcolor,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                                            fontWeight = FontWeight.Bold,
+                                                            fontSize = (widthofscreen * 0.012f).sp,
+                                                            textAlign = TextAlign.Center
+                                                        )
+                                                    )
+
+                                                    Text(
+                                                        text = buildAnnotatedString {
+                                                            append("Android app to create free AI images in seconds! Perform OCR, Object Detection, and many more. ")
+                                                            if (!expand) {
+                                                                withStyle(
+                                                                    style = SpanStyle(
+                                                                        fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                                        color = onPrimaryColor
+                                                                    )
+                                                                ) {
+                                                                    append("Read more")
+                                                                }
+                                                            }
+
+                                                        },
+                                                        style = TextStyle(
+                                                            fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                                            color = onBackgroundColor
+                                                        ),
+                                                        modifier = Modifier.padding(top = (widthofscreen * 0.017f).dp)
+                                                    )
+
+                                                    if (expand) {
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                withStyle(
+                                                                    SpanStyle(
+                                                                        fontSize = (widthofscreen * 0.015f).sp,
+                                                                        fontFamily = FontFamily(
+                                                                            Font(
+                                                                                Res.font.GothamMedium
+                                                                            )
+                                                                        ),
+                                                                        color = onBackgroundColor,
+                                                                        fontWeight = FontWeight.Bold
+
+                                                                    )
+                                                                ) {
+                                                                    append("Used tech- ")
+                                                                }
+                                                                append("Kotlin, Jetpack Compose, Ktor, MVVM")
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier.padding(top = (widthofscreen * 0.03f).dp)
+                                                                .fillMaxWidth()
+                                                        )
+
+                                                        Text("Features", style = TextStyle(
+                                                            fontSize = (widthofscreen * 0.015f).sp,
+                                                            fontFamily = FontFamily(
+                                                                Font(
+                                                                    Res.font.GothamMedium
+                                                                )
+                                                            ),
+                                                            color = onBackgroundColor,
+                                                            fontWeight = FontWeight.Bold
+                                                        ), modifier = Modifier.padding(vertical = (widthofscreen*0.009f).dp).fillMaxWidth())
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Create free AI images in seconds!")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Perform OCR, Object Detection, and many more. ")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Lightweight and user friendly")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("No subscription required")
+
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier
+                                                                .fillMaxWidth()
+                                                        )
+                                                    }
+
+
+
+
+
+                                                }
+                                            }
+                                        }
+                                        //Autoupdater
+                                        item {
+                                            var expand by remember {
+                                                mutableStateOf(false)
+                                            }
+                                            val bullet="\u2022"
+                                            val newline="\n"
+                                            val size by animateDpAsState(targetValue = if (expand) (widthofscreen * 0.4f).dp else (widthofscreen * 0.18f).dp)
+                                            Card(
+                                                Modifier.width(size).height(size * 1.2f).clickable {
+                                                    expand = !expand
+                                                },
+                                                border = BorderStroke(
+                                                    width = 2.dp,
+                                                    color = onPrimaryColor
+                                                ),
+                                                backgroundColor = primaryColor,
+                                                shape = RoundedCornerShape(16.dp)
+                                            ) {
+                                                Column(
+                                                    modifier = Modifier.fillMaxSize()
+                                                        .padding((widthofscreen * 0.008f).dp),
+                                                    horizontalAlignment = Alignment.CenterHorizontally
+                                                ) {
+                                                    Image(
+                                                        painter = painterResource(Res.drawable.github_mark),
+                                                        "",
+                                                        modifier = Modifier.size(size / 2)
+                                                            .padding((widthofscreen * 0.009f).dp)
+                                                    )
+                                                    Text(
+                                                        "AutoUpdater", style = TextStyle(
+                                                            color = themedTextcolor,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamBold)),
+                                                            fontWeight = FontWeight.Bold,
+                                                            fontSize = (widthofscreen * 0.012f).sp,
+                                                            textAlign = TextAlign.Center
+                                                        )
+                                                    )
+
+                                                    Text(
+                                                        text = buildAnnotatedString {
+                                                            append("An Android library to automatically update apps without any app store channel.")
+                                                            if (!expand) {
+                                                                withStyle(
+                                                                    style = SpanStyle(
+                                                                        fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                                        color = onPrimaryColor
+                                                                    )
+                                                                ) {
+                                                                    append("Read more")
+                                                                }
+                                                            }
+
+                                                        },
+                                                        style = TextStyle(
+                                                            fontSize = if(expand) (widthofscreen * 0.015f).sp else (widthofscreen * 0.01f).sp,
+                                                            fontFamily = FontFamily(Font(Res.font.GothamMedium)),
+                                                            color = onBackgroundColor
+                                                        ),
+                                                        modifier = Modifier.padding(top = (widthofscreen * 0.017f).dp)
+                                                    )
+
+                                                    if (expand) {
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                withStyle(
+                                                                    SpanStyle(
+                                                                        fontSize = (widthofscreen * 0.015f).sp,
+                                                                        fontFamily = FontFamily(
+                                                                            Font(
+                                                                                Res.font.GothamMedium
+                                                                            )
+                                                                        ),
+                                                                        color = onBackgroundColor,
+                                                                        fontWeight = FontWeight.Bold
+
+                                                                    )
+                                                                ) {
+                                                                    append("Used tech- ")
+                                                                }
+                                                                append("Kotlin, Jetpack Compose, Ktor")
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier.padding(top = (widthofscreen * 0.03f).dp)
+                                                                .fillMaxWidth()
+                                                        )
+
+                                                        Text("Features", style = TextStyle(
+                                                            fontSize = (widthofscreen * 0.015f).sp,
+                                                            fontFamily = FontFamily(
+                                                                Font(
+                                                                    Res.font.GothamMedium
+                                                                )
+                                                            ),
+                                                            color = onBackgroundColor,
+                                                            fontWeight = FontWeight.Bold
+                                                        ), modifier = Modifier.padding(vertical = (widthofscreen*0.009f).dp).fillMaxWidth())
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Support for one-click update - reducing development overhead")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Provides download progress")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("Lightweight and developer friendly")
+                                                                append(newline)
+                                                                append(bullet)
+                                                                append(" ")
+                                                                append("20+ Stars on GitHub")
+
+                                                            },
+                                                            style = TextStyle(
+                                                                fontSize = (widthofscreen * 0.015f).sp,
+                                                                fontFamily = FontFamily(Font(Res.font.GothamLight)),
+                                                                color = onBackgroundColor,
+                                                                fontWeight = FontWeight.Light
+                                                            ),
+                                                            modifier = Modifier
+                                                                .fillMaxWidth()
+                                                        )
+                                                    }
+
+
+
+
+
+                                                }
+                                            }
+                                        }
+
+                                        //scorez
                                         item {
                                             var expand by remember {
                                                 mutableStateOf(false)
