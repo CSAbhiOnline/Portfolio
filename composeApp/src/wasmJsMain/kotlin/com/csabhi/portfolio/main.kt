@@ -70,6 +70,7 @@ import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -121,8 +122,18 @@ import portfolio.composeapp.generated.resources.whatsappfinalqr
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     ComposeViewport(document.body!!) {
+        val containersize= LocalWindowInfo.current.containerSize
+        val screenwidth=containersize.width
+        val screenheight=containersize.height
+        val aspectratio=screenheight.toFloat()/screenwidth.toFloat()
 
-        homepage()
+        if(aspectratio>(16/9)){
+            mobilepage()
+        }
+        else{
+            homepage()
+        }
+
 
 
     }
@@ -135,6 +146,21 @@ fun getscreenheight(): Float {
 fun getscreenwidth(): Float {
     return window.innerWidth.toFloat()
 }
+@Composable
+fun mobilepage() {
+    Box(Modifier.fillMaxSize().background(Color.Black).padding(16.dp),contentAlignment = Alignment.Center){
+        Text("You're on a mobile device\nPlease use a desktop to view this page.", modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+           style =  TextStyle(
+                color = Color.White,
+                fontSize = 40.sp,
+                fontFamily = FontFamily(Font(Res.font.square)),
+               fontWeight = FontWeight.Bold,
+               textAlign = TextAlign.Center
+            ))
+    }
+}
+
+
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
 @Composable
